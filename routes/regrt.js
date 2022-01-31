@@ -187,7 +187,34 @@ router.get('/profile', async (ctx) => {
     errorMessage: ctx.session.errorMessage
   })
   ctx.session.errorMessage = 'rst'
-})
+
+  const createpage=(ctx)=>{
+    const {page_id,page_name,page_description}=ctx.request.body
+    data.push({page_id,page_name,page_description})
+    ctx.body="page added into your account";
+  
+    }
+    router.post('/createpage',createpage)
+    try {
+      
+      const user = CRED.create(sanitize({ //rmv illgl char from data 
+        page_id,page_name,page_description
+      }))
+      ctx.session.user = {  //st
+        page_id: user.page_id,
+        page_name: user.page_name,
+        page_description: user.page_description
+      }
+     
+    } catch (err) {
+      ctx.throw(400, 'not valid')
+  
+      ctx.redirect('/createpage')
+    }
+  })
+
+
+
 //reset passwd
 
 // const service= {
