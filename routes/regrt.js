@@ -4,8 +4,8 @@ const session = require('koa-session');
 const router = new koaRouter()
 const mdlwr = require('../middleware')
 const vldt = require('../validate.js')
-const crypto=require("crypto")
-const bcrypt=require("bcrypt")
+const crypto = require("crypto")
+const bcrypt = require("bcrypt")
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
@@ -188,30 +188,90 @@ router.get('/profile', async (ctx) => {
   })
   ctx.session.errorMessage = 'rst'
 
-  const createpage=(ctx)=>{
-    const {page_id,page_name,page_description}=ctx.request.body
-    data.push({page_id,page_name,page_description})
-    ctx.body="page added into your account";
-  
+  const createpage = (ctx) => {
+    const { page_id, page_name, page_description } = ctx.request.body
+    data.push({ page_id, page_name, page_description })
+    ctx.body = "page added into your account";
+
+  }
+
+  const data=[
+    {"page_id":1,"page_name":"a","page_desc":"demo page from server"},
+    {"page_id":2,"page_name":"b","page_desc":"demo page from server"},
+    {"page_id":3,"page_name":"c","page_desc":"demo page from server"}
+]
+  router.post('/createpage', createpage)
+  try {
+
+    const user = CRED.create(sanitize({ //rmv illgl char from data 
+      page_id, page_name, page_description
+    }))
+    ctx.session.user = {  //st
+      page_id: user.page_id,
+      page_name: user.page_name,
+      page_description: user.page_description
     }
-    router.post('/createpage',createpage)
-    try {
-      
-      const user = CRED.create(sanitize({ //rmv illgl char from data 
-        page_id,page_name,page_description
-      }))
-      ctx.session.user = {  //st
-        page_id: user.page_id,
-        page_name: user.page_name,
-        page_description: user.page_description
-      }
-     
-    } catch (err) {
-      ctx.throw(400, 'not valid')
+
+  } catch (err) {
+    ctx.throw(400, 'not valid')
+
+    ctx.redirect('/createpage')
+  }
+
+//read page data
+let read=(ctx)=>{
+
+  ctx.body=data 
+}
+router.get('/',read)
+
+// user can add pages into it
+const addpage=(ctx)=>{
+  const page=ctx.request.body;  //
+  data.push(page)
+  ctx.body="page has been added";
   
-      ctx.redirect('/createpage')
+  }
+  router.post('/addpage',addpage)
+
+
+  const update=(ctx)=>{
+    let page=ctx.request.body
+    const index=data.findIndex((e=>e.id===page_id.id))
+    let msg;
+    if(index==-1)
+    {
+      data.push(page);
+      msg="your page has been added"
+
     }
-  })
+    else{
+      data[index]=page;
+      msg="your page has been upgaraded"
+    }
+    ctx.body=msg;
+  }
+  router.post('/update',update)
+
+// delete
+
+const deletepage=(ctx)=>{
+
+  let page=ctx.request.body
+  const index=data.findIndex((e)=>e.id===page_id.id)
+  let msg;
+
+  if(index==-1)
+  {
+    delete data[index];
+    msg="your page has been deleted"
+  }
+  ctx.body=msg
+
+}
+router.delete('/deletepage',deletepage)
+
+})
 
 
 
@@ -285,7 +345,7 @@ router.get('/profile', async (ctx) => {
 
 router.post('/forgotPassword', async (ctx) => {
 
-  
+
 
   const service = {
     async sendToken(ctx) {
@@ -310,7 +370,7 @@ router.post('/forgotPassword', async (ctx) => {
     },
     async verifyToken(ctx, next) {
       let user = await mongo.users.findOne({ _id: ObjectId(req.params.userId) });
-      if (!user) return ctx.status(400).ctx,body("Invalid link or expired")
+      if (!user) return ctx.status(400).ctx, body("Invalid link or expired")
 
       let token = req.params.token
 
