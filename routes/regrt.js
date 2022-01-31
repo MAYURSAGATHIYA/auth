@@ -179,102 +179,188 @@ router.post('/login', async (ctx) => {
 //       ctx.throw(500)
 //     }
 //   }
+
 router.get('/profile', async (ctx) => {
 
-  const { first, last, email } = ctx.session.user
+  const { first, last, email } = ctx.bdoy
   await ctx('profile', {
     first, last, email,
     errorMessage: ctx.session.errorMessage
   })
   ctx.session.errorMessage = 'rst'
+  ctx.redirect('/createpage')
+})
 
-  const createpage = (ctx) => {
-    const { page_id, page_name, page_description } = ctx.request.body
-    data.push({ page_id, page_name, page_description })
-    ctx.body = "page added into your account";
+//===========================================================================================================================================
+//===========================================================================================================================================
+//===========================================================================================================================================
+//creating pages 
 
-  }
+const createpage = (ctx) => {
+  const { page_id, page_name, page_description } = ctx.request.body
+  data.push({ page_id, page_name, page_description })
+  ctx.body = "page added into your account";
+}
 
-  const data=[
-    {"page_id":1,"page_name":"a","page_desc":"demo page from server"},
-    {"page_id":2,"page_name":"b","page_desc":"demo page from server"},
-    {"page_id":3,"page_name":"c","page_desc":"demo page from server"}
+const data = [    //creating demo pages from serrver
+  { "page_id": 1, "page_name": "a", "page_desc": "demo page from server" },
+  { "page_id": 2, "page_name": "b", "page_desc": "demo page from server" },
+  { "page_id": 3, "page_name": "c", "page_desc": "demo page from server" }
 ]
-  router.post('/createpage', createpage)
-  try {
+router.post('/createpage', createpage)
 
-    const user = CRED.create(sanitize({ //rmv illgl char from data 
-      page_id, page_name, page_description
-    }))
-    ctx.session.user = {  //st
-      page_id: user.page_id,
-      page_name: user.page_name,
-      page_description: user.page_description
-    }
-
-  } catch (err) {
-    ctx.throw(400, 'not valid')
-
-    ctx.redirect('/createpage')
+try {
+  const user = CRED.create(sanitize({ //rmv illgl char from data 
+    page_id, page_name, page_description
+  }))
+  ctx.session.user = {  //st
+    page_id: user.page_id,
+    page_name: user.page_name,
+    page_description: user.page_description
   }
+} catch (err) {
+  // ctx.throw(400, 'not valid')
+  // ctx.redirect('/createpage')
+  err="non valid";
+}
 
 //read page data
-let read=(ctx)=>{
+let read = (ctx) => {
 
-  ctx.body=data 
+  ctx.body = data
 }
-router.get('/',read)
+router.get('/readpage', read)
 
 // user can add pages into it
-const addpage=(ctx)=>{
-  const page=ctx.request.body;  //
+const addpage = (ctx) => {
+  const page = ctx.request.body;  //
   data.push(page)
-  ctx.body="page has been added";
-  
+  ctx.body = "page has been added";
+
+}
+router.post('/addpage', addpage)
+
+
+const update = (ctx) => {
+  let page = ctx.request.body
+  const index = data.findIndex((e => e.id === page_id.id))
+  let msg;
+  if (index == -1) {
+    data.push(page);
+    msg = "your page has been added"
+
   }
-  router.post('/addpage',addpage)
-
-
-  const update=(ctx)=>{
-    let page=ctx.request.body
-    const index=data.findIndex((e=>e.id===page_id.id))
-    let msg;
-    if(index==-1)
-    {
-      data.push(page);
-      msg="your page has been added"
-
-    }
-    else{
-      data[index]=page;
-      msg="your page has been upgaraded"
-    }
-    ctx.body=msg;
+  else {
+    data[index] = page;
+    msg = "your page has been upgaraded"
   }
-  router.post('/update',update)
+  ctx.body = msg;
+}
+router.post('/update', update)
 
 // delete
 
-const deletepage=(ctx)=>{
+const deletepage = (ctx) => {
 
-  let page=ctx.request.body
-  const index=data.findIndex((e)=>e.id===page_id.id)
+  let page = ctx.request.body
+  const index = data.findIndex((e) => e.id === page_id.id)
   let msg;
 
-  if(index==-1)
-  {
+  if (index == -1) {
     delete data[index];
-    msg="your page has been deleted"
+    msg = "your page has been deleted"
   }
-  ctx.body=msg
+  ctx.body = msg
 
 }
-router.delete('/deletepage',deletepage)
-
-})
+router.delete('/deletepage', deletepage)
 
 
+// })
+//===========================================================================================================================================
+//===========================================================================================================================================
+//===========================================================================================================================================
+//creating posts
+const createpost = (ctx) => {
+  const { post_id, post_type, post_description } = ctx.request.body
+  data.push({ post_id, post_type, post_description})
+  ctx.body = "successfully post ";
+}
 
+const postdata = [    //creating demo pages from serrver
+  { "post_id": 1, "post_type": "demo_post", "post_description": "demo post from server for tutorial" }
+ 
+]
+router.post('/createpost', createpost)
+
+try {
+  const user = CRED.create(sanitize({ //rmv illgl char from data 
+    post_id, post_type, post_description
+  }))
+  ctx.session.user = {  //st
+    post_id: user.post_id,
+    post_type: user.post_type,
+    post_description: user.post_description
+  }
+} catch (err) {
+  err="not valid please recreat the post ";
+}
+
+//read page data
+let readpost = (ctx) => {
+
+  ctx.body = postdata
+}
+router.get('/readpost', readpost)
+
+// user can add pages into it
+const addpost = (ctx) => {
+  const post = ctx.request.body;  //
+  postdata.push(post)
+  ctx.body = "page has been added";
+
+}
+router.post('/addpost', addpost)
+
+
+const updatepost = (ctx) => {
+  let post = ctx.request.body
+  const index = postdata.findIndex((e => e.id === post_id.id))
+  let msg;
+  if (index == -1) {
+    postdata.push(post);
+    msg = "your page has been added"
+
+  }
+  else {
+    postdata[index] = post;
+    msg = "your page has been upgaraded"
+  }
+  ctx.body = msg;
+}
+router.post('/updatepost', updatepost)
+
+// delete
+
+const deletepost = (ctx) => {
+
+  let post = ctx.request.body
+  const index = postdata.findIndex((e) => e.id === post_id.id)
+  let msg;
+
+  if (index == -1) {
+    delete postdata[index];
+    msg = "your page has been deleted"
+  }
+  ctx.body = msg
+
+}
+router.delete('/deletepost', deletepost)
+
+
+
+
+//======================================================================================================================================================
 //reset passwd
 
 // const service= {
