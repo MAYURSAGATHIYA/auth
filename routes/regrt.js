@@ -510,7 +510,40 @@ router.post('/forgotPassword', async (ctx) => {
   }
 
 })
+// ==
+const {createpro,getpro,getpros,uppro,delpro}=require('../api/pro_api')
+
+router.get('/getpros',async ctx=>{
+  ctx.body=await getpros();
+})
+
+router.post('/createpro',async ctx=>{
+  let pro=ctx.request.body;
+  pro=await createpro(pro);
+
+  ctx.response.status=200;
+  ctx.body=pro;
+
+})
+
+router.get("/:id",async ctx=>{
+  const id= ctx.params.id;
+  ctx.body=await getpro(id);
+})
+
+router.delete('/:id',async ctx=>{
+
+  const id=ctx.params.id;
+  await delpro(id);
+})
+
+router.put('/:id',async ctx=>{
+
+  const id=ctx.params.id;
+  let pro=ctx.request.body;
+  pro=await uppro(pro);
+  ctx.response.status=200;
+  ctx.body=pro;
+})
 
 module.exports = router;
-
-

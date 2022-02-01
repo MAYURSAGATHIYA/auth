@@ -23,6 +23,8 @@ const regRoute =require('./routes/regrt');
 const port = 4000;
 const Router = require('koa-router');
 const router = new Router();
+// const proRoutes=require('/rote')
+
 
 // const dbname = "CRED";
 // MongoClient.connect(url, (err,client)=>{
@@ -32,10 +34,10 @@ const router = new Router();
 //     else
 //         console.log("Error in the connectivity");
 // })
-router.get('/', (ctx) => {
-    ctx.body = 'ok'
+// router.get('/', (ctx) => {
+//     ctx.body = 'ok'
     
-})
+// })
 
 
 
