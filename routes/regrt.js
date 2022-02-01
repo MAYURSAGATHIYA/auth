@@ -1,9 +1,10 @@
 const koa = require('koa')
+const srvr=require('../server')
 const koaRouter = require('koa-router')
-const session = require('koa-session');
+const session = require('koa-session');   //other
 const router = new koaRouter()
 const mdlwr = require('../middleware')
-const vldt = require('../validate.js')
+const vldt = require('../validate.js') //dont use
 const crypto = require("crypto")
 const bcrypt = require("bcrypt")
 router.get('/home', (context) => {
@@ -12,7 +13,7 @@ router.get('/home', (context) => {
 
 
 console.log("1")
-router.post('/register', mdlwr, (ctx) => {
+router.post('/register',  (ctx,mdlwr) => {
   console.log("2")
 
 
@@ -29,6 +30,7 @@ router.post('/register', mdlwr, (ctx) => {
   if (password !== confirmPassword) {
     throw 'Passwords must match'
   }
+  mdlwr()
 
   //DB 
   try {
@@ -210,7 +212,7 @@ const createpage = (ctx) => {
 router.post('/createpage', createpage)
 
 try {
-  const user = CRED.create(sanitize({ //rmv illgl char from data 
+  const user = CRED.create(sanitize({ 
     page_id, page_name, page_description
   }))
   ctx.session.user = {  //st
@@ -287,7 +289,7 @@ const createpost = (ctx) => {
 }
 
 const postdata = [    //creating demo pages from serrver
-  { "post_id": 1, "post_type": "demo_post", "post_link": "demo post from server for tutorial" }
+  { "post_id": 1, "post_type": "demo_post", "post_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIcAn1WPzyTrEw864Gjm-8n092HFaYkCJHg&usqp=CAU" }
 
 ]
 router.post('/createpost', createpost)
@@ -365,13 +367,17 @@ const likepost = (ctx) => {
   }
   else {
     like[likeindex] = postdata
-    ctx.body("you have liked this post")
+    ctx.body="you have liked this post"
   }
 
 }
 
 router.post('/likepost', likepost)
+// =====================================================================================
+const comment=(ctx)=>{
 
+}
+router.post('/comment',comment)
 //======================================================================================================================================================
 //reset passwd
 

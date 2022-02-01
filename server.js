@@ -24,14 +24,14 @@ const port = 4000;
 const Router = require('koa-router');
 const router = new Router();
 
-const dbname = "CRED";
-MongoClient.connect(url, (err,client)=>{
-    if(!err) {
-        console.log("successful connection with the database");  
-    }
-    else
-        console.log("Error in the connectivity");
-})
+// const dbname = "CRED";
+// MongoClient.connect(url, (err,client)=>{
+//     if(!err) {
+//         console.log("successful connection with the database");  
+//     }
+//     else
+//         console.log("Error in the connectivity");
+// })
 router.get('/', (ctx) => {
     ctx.body = 'ok'
     
