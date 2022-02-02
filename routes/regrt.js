@@ -1,7 +1,7 @@
 const koa = require('koa')
 const srvr=require('../server')
 const koaRouter = require('koa-router')
-const session = require('koa-session');   //other
+// const session = require('koa-session');   //other
 const router = new koaRouter()
 const mdlwr = require('../middleware')
 const vldt = require('../validate.js') //dont use
@@ -11,51 +11,51 @@ router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
 
+//register main 
+// console.log("1")
+// router.post('/register',  (ctx,mdlwr) => {
+//   console.log("2")
 
-console.log("1")
-router.post('/register',  (ctx,mdlwr) => {
-  console.log("2")
 
+//   let { first, last, email, password, confirmPassword } = ctx.request.body //wobp mdwr
 
-  let { first, last, email, password, confirmPassword } = ctx.request.body //wobp mdwr
+//   if (!(first && last && email && password && confirmPassword)) {
+//     throw 'All fields are required'
+//   }
+//   let index;
+//   if (index = CRED.findIndex((e) => e.id === email)) {
+//     throw 'this email already used'
+//   }
 
-  if (!(first && last && email && password && confirmPassword)) {
-    throw 'All fields are required'
-  }
-  let index;
-  if (index = CRED.findIndex((e) => e.id === email)) {
-    throw 'this email already used'
-  }
+//   if (password !== confirmPassword) {
+//     throw 'Passwords must match'
+//   }
+//   mdlwr()
 
-  if (password !== confirmPassword) {
-    throw 'Passwords must match'
-  }
-  mdlwr()
+//   //DB 
+//   try {
+//     console.log("db")
+//     const user = CRED.create(sanitize({ //rmv illgl char from data 
+//       first, last, email, password
+//     }))
+//     console.log("db2")
+//     ctx.session.user = {  //st
+//       first: user.first,
+//       last: user.last,
+//       email: user.email
+//     }
+//     console.log("db3")
+//     ctx.redirect('/profile')
+//     console.log("db4")
+//   } catch (err) {
+//     // ctx.session.errorMessage= 'invalid details pls enter prpr details' 
+//     // errorMessage=ctx.session.errorMessage= 'invalid details pls enter prpr details' ;
+//     // ctx.session.errorMessage = 'invalid details pls enter prpr details'
+//     ctx.throw(400, 'not valid')
 
-  //DB 
-  try {
-    console.log("db")
-    const user = CRED.create(sanitize({ //rmv illgl char from data 
-      first, last, email, password
-    }))
-    console.log("db2")
-    ctx.session.user = {  //st
-      first: user.first,
-      last: user.last,
-      email: user.email
-    }
-    console.log("db3")
-    ctx.redirect('/profile')
-    console.log("db4")
-  } catch (err) {
-    // ctx.session.errorMessage= 'invalid details pls enter prpr details' 
-    // errorMessage=ctx.session.errorMessage= 'invalid details pls enter prpr details' ;
-    // ctx.session.errorMessage = 'invalid details pls enter prpr details'
-    ctx.throw(400, 'not valid')
-
-    ctx.redirect('/register')
-  }
-})
+//     ctx.redirect('/register')
+//   }
+// })
 
 
 router.post('/login', async (ctx) => {
@@ -69,11 +69,10 @@ router.post('/login', async (ctx) => {
 
     const user = await User.authenticate(sanitize({ email, password }))
 
-    ctx.session.user = user
+    // ctx.session.user = user
     ctx.redirect('/profile')
-
+    
   } catch (err) {
-    ctx.session.errorMessage = err
     ctx.redirect('/login')
   }
 })
@@ -182,16 +181,39 @@ router.post('/login', async (ctx) => {
 //     }
 //   }
 
+const dtbs=require('../dal/index')
 router.get('/profile', async (ctx) => {
 
-  const { first, last, email } = ctx.bdoy
-  await ctx('profile', {
-    first, last, email,
-    errorMessage: ctx.session.errorMessage
-  })
-  ctx.session.errorMessage = 'rst'
-  ctx.redirect('/createpage')
+
+  ctx.body="this is your profile";
+
+    var dbo =("CRED");
+
+    dbo.collection("user").find({}, { myobj: { email: 'abc1b@cibseicubefuwef.com'} }).toArray((err, result)=> {
+      if (err) throw err;
+      console.log(result);
+      db.close();
+    });
+ 
+
+
+
 })
+// =============================================================
+// find
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://strongdemon:kdb65GK6zYJvRcg@strong.obgla.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-lnv1hu-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
+
+// MongoClient.connect(url, function(err, db) {
+//     if (err) throw err;
+//     var dbo = db.db("SOC_MANAGEMENT_SYTEM");
+
+//     dbo.collection("TENANT").find({}, { myobj: { HOME_ID: '61decfc17dc3064496e212f9'} }).toArray((err, result)=> {
+//       if (err) throw err;
+//       console.log(result);
+//       db.close();
+//     });
+//   });
 
 //===========================================================================================================================================
 //===========================================================================================================================================
@@ -511,7 +533,10 @@ router.post('/forgotPassword', async (ctx) => {
 
 })
 // ==
-const {createpro,getpro,getpros,uppro,delpro}=require('../api/pro_api')
+//new register logic with successfully connection in to db
+//register
+const {createpro,getpro,getpros,uppro,delpro}=require('../api/pro_api');
+// const { register } = require('validatorjs');
 
 router.get('/getpros',async ctx=>{
   ctx.body=await getpros();
@@ -547,3 +572,47 @@ router.put('/:id',async ctx=>{
 })
 
 module.exports = router;
+
+
+
+
+
+
+
+
+// bup
+// register
+// const {createpro,getpro,getpros,uppro,delpro}=require('../api/pro_api')
+
+// router.get('/getpros',async ctx=>{
+//   ctx.body=await getpros();
+// })
+
+// router.post('/createpro',async ctx=>{
+//   let pro=ctx.request.body;
+//   pro=await createpro(pro);
+
+//   ctx.response.status=200;
+//   ctx.body=pro;
+
+// })
+
+// router.get("/:id",async ctx=>{
+//   const id= ctx.params.id;
+//   ctx.body=await getpro(id);
+// })
+
+// router.delete('/:id',async ctx=>{
+
+//   const id=ctx.params.id;
+//   await delpro(id);
+// })
+
+// router.put('/:id',async ctx=>{
+
+//   const id=ctx.params.id;
+//   let pro=ctx.request.body;
+//   pro=await uppro(pro);
+//   ctx.response.status=200;
+//   ctx.body=pro;
+// })
