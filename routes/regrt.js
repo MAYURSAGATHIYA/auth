@@ -1,5 +1,5 @@
 const koa = require('koa')
-const srvr=require('../server')
+const srvr = require('../server')
 const koaRouter = require('koa-router')
 // const session = require('koa-session');   //other
 const router = new koaRouter()
@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt")
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
+
 
 //register main 
 // console.log("1")
@@ -60,24 +61,22 @@ router.get('/home', (context) => {
 
 router.post('/login', async (ctx) => {
 
-  const { email, password } = ctx.request.body
-  if (!(email && password)) {
-    throw 'All fields are required'
-  }
+const mongo = require('../dal/index.js').db('CRED');
 
-  try {
+const ObjectId = require('mongodb').ObjectId;
+const dtbs2 = require('../dal/prod')
 
-    const user = await User.authenticate(sanitize({ email, password }))
+  const {email,password}=ctx.request.body;
 
-    // ctx.session.user = user
-    ctx.redirect('/profile')
+  const getmaindata = await mongo.collection("user").findOne({
+    email
+
+  })
+  ctx.body = {
+    "message": "successfully logged in",
+    "response": getmaindata}
     
-  } catch (err) {
-    ctx.redirect('/login')
-  }
 })
-
-
 
 
 // console.log("1")
@@ -180,25 +179,50 @@ router.post('/login', async (ctx) => {
 //       ctx.throw(500)
 //     }
 //   }
+//=======================
+const mongo = require('../dal/index.js').db('CRED');
 
-const dtbs=require('../dal/index')
-router.get('/profile', async (ctx) => {
+const ObjectId = require('mongodb').ObjectId;
+const dtbs2 = require('../dal/prod')
+
+router.post('/profile', async (ctx) => {
+  console.log("2")
+  const {email}=ctx.request.body;
+
+  const getmaindata = await mongo.collection("user").findOne({
+    email
+
+  })
+  ctx.body = {
+    "message": "WELCOME TO YOUR PROFILE",
+    "response": getmaindata}
+  });
+  //     r1.connect((err, db) =>{   //MongoClient
+  //       console.log("3")
+  //         if (err) throw err;
+  //         console.log("4")
+  //         var dbo = db.db("CRED");
+  //         console.log("4")
+  //         const getdatamain=await dbo.collection("user").findOne({
+
+  //             email: ctx.body
+  //         })
+
+  // //         function(err, result) {
+  // //             if (err) throw err;
+  // //             ctx.body=result;
+  // //             db.close();
+  // //             console.log("5")
+  //         // });
+  //         // console.log("6")
+  //     });
+  // console.log("7")
 
 
-  ctx.body="this is your profile";
 
-    var dbo =("CRED");
-
-    dbo.collection("user").find({}, { myobj: { email: 'abc1b@cibseicubefuwef.com'} }).toArray((err, result)=> {
-      if (err) throw err;
-      console.log(result);
-      db.close();
-    });
- 
-
-
-
-})
+//  const mainprodata=ctx.body;
+//  const {first,last,email}=mainprodata;
+// })
 // =============================================================
 // find
 // var MongoClient = require('mongodb').MongoClient;
@@ -234,7 +258,7 @@ const createpage = (ctx) => {
 router.post('/createpage', createpage)
 
 try {
-  const user = CRED.create(sanitize({ 
+  const user = CRED.create(sanitize({
     page_id, page_name, page_description
   }))
   ctx.session.user = {  //st
@@ -389,17 +413,17 @@ const likepost = (ctx) => {
   }
   else {
     like[likeindex] = postdata
-    ctx.body="you have liked this post"
+    ctx.body = "you have liked this post"
   }
 
 }
 
 router.post('/likepost', likepost)
 // =====================================================================================
-const comment=(ctx)=>{
+const comment = (ctx) => {
 
 }
-router.post('/comment',comment)
+router.post('/comment', comment)
 //======================================================================================================================================================
 //reset passwd
 
@@ -535,40 +559,40 @@ router.post('/forgotPassword', async (ctx) => {
 // ==
 //new register logic with successfully connection in to db
 //register
-const {createpro,getpro,getpros,uppro,delpro}=require('../api/pro_api');
+const { createpro, getpro, getpros, uppro, delpro } = require('../api/pro_api');
 // const { register } = require('validatorjs');
 
-router.get('/getpros',async ctx=>{
-  ctx.body=await getpros();
+router.get('/getpros', async ctx => {
+  ctx.body = await getpros();
 })
 
-router.post('/createpro',async ctx=>{
-  let pro=ctx.request.body;
-  pro=await createpro(pro);
+router.post('/createpro', async ctx => {
+  let pro = ctx.request.body;
+  pro = await createpro(pro);
 
-  ctx.response.status=200;
-  ctx.body=pro;
+  ctx.response.status = 200;
+  ctx.body = pro;
 
 })
 
-router.get("/:id",async ctx=>{
-  const id= ctx.params.id;
-  ctx.body=await getpro(id);
+router.get("/:id", async ctx => {
+  const id = ctx.params.id;
+  ctx.body = await getpro(id);
 })
 
-router.delete('/:id',async ctx=>{
+router.delete('/:id', async ctx => {
 
-  const id=ctx.params.id;
+  const id = ctx.params.id;
   await delpro(id);
 })
 
-router.put('/:id',async ctx=>{
+router.put('/:id', async ctx => {
 
-  const id=ctx.params.id;
-  let pro=ctx.request.body;
-  pro=await uppro(pro);
-  ctx.response.status=200;
-  ctx.body=pro;
+  const id = ctx.params.id;
+  let pro = ctx.request.body;
+  pro = await uppro(pro);
+  ctx.response.status = 200;
+  ctx.body = pro;
 })
 
 module.exports = router;
@@ -616,3 +640,4 @@ module.exports = router;
 //   ctx.response.status=200;
 //   ctx.body=pro;
 // })
+

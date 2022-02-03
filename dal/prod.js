@@ -30,4 +30,6 @@ const removeById = async id => {
     await products.deleteOne({ _id: ObjectId(id) });
 }
 
+
 module.exports = { getAll, getById, removeById, save, update };
+
