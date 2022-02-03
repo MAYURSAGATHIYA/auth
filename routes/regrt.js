@@ -277,7 +277,22 @@ let readpage = (ctx) => {
   ctx.body = data
 }
 router.get('/readpage', readpage)
+// ===============================================================
 
+router.post('/readpage1', async (ctx) => {
+  const {page_id,page_name,page_description}=ctx.request.body;
+
+  const getmaindata = await mongo.collection("user").findOne({
+    page_name,page_id,page_description
+
+  })
+  ctx.body = {
+    "message": "WELCOME TO YOUR PAGE",
+    "response": getmaindata}
+  });
+
+
+// =================================================================
 // user can add pages into it
 const addpage = (ctx) => {
   const page = ctx.request.body;  //
@@ -290,7 +305,9 @@ router.post('/addpage', addpage)
 
 const updatepage = (ctx) => {
   let upage = ctx.request.body
-  const index = data.findIndex((e => e.id === page_id.id))
+  const index = data.findIndex((e => e.id === page_id.id)) //itrate
+  
+  // data.map(x=>x+1)
   let msg;
   if (index == -1) {
     data.push(upage);
