@@ -283,12 +283,15 @@ router.post('/readpage1', async (ctx) => {
   const {page_id,page_name,page_description}=ctx.request.body;
 
   const getmaindata = await mongo.collection("user").findOne({
-    page_name,page_id,page_description
+    page_id
 
   })
   ctx.body = {
     "message": "WELCOME TO YOUR PAGE",
-    "response": getmaindata}
+    "response": page_id,page_name,page_description,
+    "msg":"you can CRUD on this page",
+    "mesg":"you can CRUD post on this page"
+  }
   });
 
 
