@@ -197,6 +197,7 @@ router.post('/profile', async (ctx) => {
     "message": "WELCOME TO YOUR PROFILE",
     "response": getmaindata}
   });
+  
   //     r1.connect((err, db) =>{   //MongoClient
   //       console.log("3")
   //         if (err) throw err;
@@ -244,9 +245,9 @@ router.post('/profile', async (ctx) => {
 //===========================================================================================================================================
 //creating pages 
 const data = [    //creating demo pages from serrver
-  { "page_id": 1, "page_name": "a", "page_desc": "demo page from server" },
-  { "page_id": 2, "page_name": "b", "page_desc": "demo page from server" },
-  { "page_id": 3, "page_name": "c", "page_desc": "demo page from server" }
+  { "page_id": 1, "page_name": "a", "page_description": "demo page from server" },
+  { "page_id": 2, "page_name": "b", "page_description": "demo page from server" },
+  { "page_id": 3, "page_name": "c", "page_description": "demo page from server" }
 ]
 const createpage = (ctx) => {
   const { page_id, page_name, page_description } = ctx.request.body
@@ -307,30 +308,31 @@ router.post('/addpage', addpage)
 
 
 const updatepage = (ctx) => {
-  let upage = ctx.request.body
+  let {page_id,page_name,page_description} = ctx.request.body
   const index = data.findIndex((e => e.id === page_id.id)) //itrate
   
   // data.map(x=>x+1)
   let msg;
   if (index == -1) {
-    data.push(upage);
+    data.push({page_id,page_name,page_description});
     msg = "your page has been added"
 
   }
   else {
-    data[index] = upage;
+    data[index] = {page_id,page_name,page_description};
     msg = "your page has been upgaraded"
   }
   ctx.body = msg;
 }
-router.post('/updatepage', updatepage)
+router.put('/updatepage', updatepage)
 
 // delete
 
+
 const deletepage = (ctx) => {
 
-  let upage = ctx.request.body
-  const indexpage = upage.findIndex((e) => e.id === page_id.id)
+  let {page_id,page_name,page_description} = ctx.request.body
+  const indexpage = data.findIndex((e) => e.id === page_id.id)
   let msg;
 
   if (indexpage == -1) {
@@ -338,9 +340,11 @@ const deletepage = (ctx) => {
     msg = "your page has been deleted"
   }
   ctx.body = msg
+  ctx.throw(400,"not fond")
 
 }
 router.delete('/deletepage', deletepage)
+
 
 
 // })
