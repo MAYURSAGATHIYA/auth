@@ -328,9 +328,8 @@ router.put('/updatepage', updatepage)
 
 // delete
 
-
 const deletepage = (ctx) => {
-
+ 
   let {page_id,page_name,page_description} = ctx.request.body
   const indexpage = data.findIndex((e) => e.id === page_id.id)
   let msg;
@@ -340,9 +339,10 @@ const deletepage = (ctx) => {
     msg = "your page has been deleted"
   }
   ctx.body = msg
-  ctx.throw(400,"not fond")
+  ctx.throw(200,"page deleted successfully")
 
 }
+
 router.delete('/deletepage', deletepage)
 
 
@@ -377,7 +377,7 @@ try {
   err = "not valid please recreat the post ";
 }
 
-//read page data
+//read post data
 let readpost = (ctx) => {
 
   ctx.body = postdata
@@ -388,7 +388,7 @@ router.get('/readpost', readpost)
 const addpost = (ctx) => {
   const post = ctx.request.body;  //
   postdata.push(post)
-  ctx.body = "page has been added";
+  ctx.body = "post has been added";
 
 }
 router.post('/addpost', addpost)
