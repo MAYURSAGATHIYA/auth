@@ -336,10 +336,11 @@ const deletepage = (ctx) => {
 
   if (indexpage == -1) {
     delete data[indexpage];
-    msg = "your page has been deleted"
+    // msg = "your page has been deleted"
   }
+  msg = "your page has been deleted"
   ctx.body = msg
-  ctx.throw(200,"page deleted successfully")
+  //ctx.throw(200,"page deleted successfully")
 
 }
 
@@ -665,3 +666,4 @@ module.exports = router;
 //   ctx.body=pro;
 // })
 
+// node_modules/
