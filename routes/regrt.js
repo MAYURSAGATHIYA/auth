@@ -359,7 +359,7 @@ const createpost = (ctx) => {
   ctx.body = "successfully post ";
 }
 
-const postdata = [    //creating demo pages from serrver
+var postdata = [    //creating demo pages from serrver
   { "post_id": 1, "post_type": "demo_post", "post_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIcAn1WPzyTrEw864Gjm-8n092HFaYkCJHg&usqp=CAU" }
 
 ]
@@ -422,8 +422,9 @@ const deletepost = (ctx) => {
 
   if (index == -1) {
     delete postdata[index];
-    msg = "your page has been deleted"
+  
   }
+  msg = "your page has been deleted"
   ctx.body = msg
 
 }
