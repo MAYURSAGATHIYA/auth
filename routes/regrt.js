@@ -395,27 +395,27 @@ router.post('/addpost', addpost)
 
 
 const updatepost = (ctx) => {
-  let upost = ctx.request.body
+  let { post_id, post_type, post_link } = ctx.request.body
   const index = postdata.findIndex((e => e.id === post_id.id))
   let msg;
   if (index == -1) {
-    postdata.push(upost);
+    postdata.push({ post_id, post_type, post_link });
     msg = "your page has been added"
 
   }
   else {
-    postdata[index] = upost;
+    postdata[index] = { post_id, post_type, post_link };
     msg = "your page has been upgaraded"
   }
   ctx.body = msg;
 }
-router.post('/updatepost', updatepost)
+router.put('/updatepost', updatepost)
 
 // delete
 
 const deletepost = (ctx) => {
 
-  postdata = ctx.request.body
+  let { post_id, post_type, post_link } = ctx.request.body
   const index = postdata.findIndex((e) => e.id === post_id.id)
   let msg;
 
