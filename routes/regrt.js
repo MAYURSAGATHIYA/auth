@@ -7,344 +7,164 @@ const mdlwr = require('../middleware')
 const vldt = require('../validate.js') //dont use
 const crypto = require("crypto")
 const bcrypt = require("bcrypt")
+
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
 
+//login main
+// router.post('/login', async (ctx) => {
 
-//register main 
-// console.log("1")
-// router.post('/register',  (ctx,mdlwr) => {
-//   console.log("2")
+// const mongo = require('../dal/index.js').db('CRED');
 
+// const ObjectId = require('mongodb').ObjectId;
+// const dtbs2 = require('../dal/prod')
 
-//   let { first, last, email, password, confirmPassword } = ctx.request.body //wobp mdwr
+//   const {email,password}=ctx.request.body;
 
-//   if (!(first && last && email && password && confirmPassword)) {
-//     throw 'All fields are required'
-//   }
-//   let index;
-//   if (index = CRED.findIndex((e) => e.id === email)) {
-//     throw 'this email already used'
-//   }
+//   const getmaindata = await mongo.collection("user").findOne({
+//     email
 
-//   if (password !== confirmPassword) {
-//     throw 'Passwords must match'
-//   }
-//   mdlwr()
-
-//   //DB 
-//   try {
-//     console.log("db")
-//     const user = CRED.create(sanitize({ //rmv illgl char from data 
-//       first, last, email, password
-//     }))
-//     console.log("db2")
-//     ctx.session.user = {  //st
-//       first: user.first,
-//       last: user.last,
-//       email: user.email
-//     }
-//     console.log("db3")
-//     ctx.redirect('/profile')
-//     console.log("db4")
-//   } catch (err) {
-//     // ctx.session.errorMessage= 'invalid details pls enter prpr details' 
-//     // errorMessage=ctx.session.errorMessage= 'invalid details pls enter prpr details' ;
-//     // ctx.session.errorMessage = 'invalid details pls enter prpr details'
-//     ctx.throw(400, 'not valid')
-
-//     ctx.redirect('/register')
-//   }
-// })
-
-
-router.post('/login', async (ctx) => {
-
-const mongo = require('../dal/index.js').db('CRED');
-
-const ObjectId = require('mongodb').ObjectId;
-const dtbs2 = require('../dal/prod')
-
-  const {email,password}=ctx.request.body;
-
-  const getmaindata = await mongo.collection("user").findOne({
-    email
-
-  })
-  ctx.body = {
-    "message": "successfully logged in",
-    "response": getmaindata}
+//   })
+//   ctx.body = {
+//     "message": "successfully logged in",
+//     "response": getmaindata}
     
-})
-
-
-// console.log("1")
-// router.get('/register', async (ctx)=>{
-//     console.log("2")
-//     // if(typeof(errorMessage) == 'undefined') {
-//     //     ctx.body = "errorr";
-//     //   }
-//   await ctx.render('register', {
-//     csrfToken: ctx.csrf,
-//     errorMessage: ctx.session.errorMessage,
-
-
-//   })
-//   console.log("3")
-
-//   ctx.session.errorMessage = ''  //rst err msgs
-//  })
-
-// router.get('/login', async (ctx)=>{                                  
-//   await ctx.render('login', {
-//     csrfToken: ctx.csrf,
-//     errorMessage: ctx.session.errorMessage
-//   })
-
-//   //eventually reset error messages
-//   ctx.session.errorMessage = ''
 // })
 
 
 
 
-
-//reg
-
-// async register(ctx) {
-//     const { body } = ctx.request;
-//     try {
-//       if (!body.username || !body.password) {
-//         ctx.status = 400;
-//         ctx.body = {
-//           error: `expected an object with username, password but got: ${body}`,
-//         }
-//         return;
-//       }
-//       body.password = await bcrypt.hash(body.password, 5)
-//       let user = await User.find({ username: body.username });
-//       if (!user.length) {
-//         const newUser = new User(body);
-//         user = await newUser.save();
-//         ctx.status = 200;
-//         ctx.body = {
-//           Message: 'registration succeeded',
-//           user,
-//         }
-//       } else {
-//         ctx.status = 406;
-//         ctx.body = {
-//           Message: 'user name already exists',
-//         }
-//       }
-//     } catch (error) {
-//       ctx.throw(500)
-//     }
-//   }
-
-
-// //login
-// async login(ctx) {
-//     const { body } = ctx.request
-//     try {
-//       const user = await User.findOne({ username: body.username });
-//       if (!user) {
-//         ctx.status = 401
-//         ctx.body = {
-//           Message: 'user name error',
-//         }
-//         return;
-//       }
-//       //Is the matching password equal
-//       if (await bcrypt.compare(body.password, user.password)) {
-//         ctx.status = 200
-//         ctx.body = {
-//           Message: 'login succeeded',
-//           user: user.userInfo,
-//           //The token is generated and returned to the client
-//           token: jsonwebtoken.sign({
-//             data: user,
-//             //Set token expiration time
-//             exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
-//           }, secret),
-//         }
-//       } else {
-//         ctx.status = 401
-//         ctx.body = {
-//           Message: 'password error',
-//         }
-//       }
-//     } catch (error) {
-//       ctx.throw(500)
-//     }
-//   }
 //=======================
-const mongo = require('../dal/index.js').db('CRED');
 
-const ObjectId = require('mongodb').ObjectId;
-const dtbs2 = require('../dal/prod')
+//main profile
+// const mongo = require('../dal/index.js').db('CRED');
 
-router.post('/profile', async (ctx) => {
-  console.log("2")
-  const {email}=ctx.request.body;
+// const ObjectId = require('mongodb').ObjectId;
+// const dtbs2 = require('../dal/prod')
 
-  const getmaindata = await mongo.collection("user").findOne({
-    email
+// router.post('/profile', async (ctx) => {
+//   console.log("2")
+//   const {email}=ctx.request.body;
 
-  })
-  ctx.body = {
-    "message": "WELCOME TO YOUR PROFILE",
-    "response": getmaindata}
-  });
-  
-  //     r1.connect((err, db) =>{   //MongoClient
-  //       console.log("3")
-  //         if (err) throw err;
-  //         console.log("4")
-  //         var dbo = db.db("CRED");
-  //         console.log("4")
-  //         const getdatamain=await dbo.collection("user").findOne({
+//   const getmaindata = await mongo.collection("user").findOne({
+//     email
 
-  //             email: ctx.body
-  //         })
-
-  // //         function(err, result) {
-  // //             if (err) throw err;
-  // //             ctx.body=result;
-  // //             db.close();
-  // //             console.log("5")
-  //         // });
-  //         // console.log("6")
-  //     });
-  // console.log("7")
-
-
-
-//  const mainprodata=ctx.body;
-//  const {first,last,email}=mainprodata;
-// })
-// =============================================================
-// find
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb+srv://strongdemon:kdb65GK6zYJvRcg@strong.obgla.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-lnv1hu-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
-
-// MongoClient.connect(url, function(err, db) {
-//     if (err) throw err;
-//     var dbo = db.db("SOC_MANAGEMENT_SYTEM");
-
-//     dbo.collection("TENANT").find({}, { myobj: { HOME_ID: '61decfc17dc3064496e212f9'} }).toArray((err, result)=> {
-//       if (err) throw err;
-//       console.log(result);
-//       db.close();
-//     });
+//   })
+//   ctx.body = {
+//     "message": "WELCOME TO YOUR PROFILE",
+//     "response": getmaindata}
 //   });
-
+  
 //===========================================================================================================================================
 //===========================================================================================================================================
 //===========================================================================================================================================
 //creating pages 
-const data = [    //creating demo pages from serrver
-  { "page_id": 1, "page_name": "a", "page_description": "demo page from server" },
-  { "page_id": 2, "page_name": "b", "page_description": "demo page from server" },
-  { "page_id": 3, "page_name": "c", "page_description": "demo page from server" }
-]
-const createpage = (ctx) => {
-  const { page_id, page_name, page_description } = ctx.request.body
-  data.push({ page_id, page_name, page_description })
-  ctx.body = "page added into your account";
-}
+// const data = [    //creating demo pages from serrver
+//   { "page_id": 1, "page_name": "a", "page_description": "demo page from server" },
+//   { "page_id": 2, "page_name": "b", "page_description": "demo page from server" },
+//   { "page_id": 3, "page_name": "c", "page_description": "demo page from server" }
+// ]
+// const createpage = (ctx) => {
+//   const { page_id, page_name, page_description } = ctx.request.body
+//   data.push({ page_id, page_name, page_description })
 
 
-router.post('/createpage', createpage)
-
-try {
-  const user = CRED.create(sanitize({
-    page_id, page_name, page_description
-  }))
-  ctx.session.user = {  //st
-    page_id: user.page_id,
-    page_name: user.page_name,
-    page_description: user.page_description
-  }
-} catch (err) {
-
-  err = "non valid";
-}
-
-//read page data
-let readpage = (ctx) => {
-
-  ctx.body = data
-}
-router.get('/readpage', readpage)
-// ===============================================================
-
-router.post('/readpage1', async (ctx) => {
-  const {page_id,page_name,page_description}=ctx.request.body;
-
-  const getmaindata = await mongo.collection("user").findOne({
-    page_id
-
-  })
-  ctx.body = {
-    "message": "WELCOME TO YOUR PAGE",
-    "response": page_id,page_name,page_description,
-    "msg":"you can CRUD on this page",
-    "mesg":"you can CRUD post on this page"
-  }
-  });
-
-
-// =================================================================
-// user can add pages into it
-const addpage = (ctx) => {
-  const page = ctx.request.body;  //
-  data.push(page)
-  ctx.body = "page has been added";
-
-}
-router.post('/addpage', addpage)
-
-
-const updatepage = (ctx) => {
-  let {page_id,page_name,page_description} = ctx.request.body
-  const index = data.findIndex((e => e.id === page_id.id)) //itrate
+//   try {
+//     const user = CRED.create(sanitize({
+//       page_id, page_name, page_description
+//     }))
+//     ctx.session.user = {  //st
+//       page_id: user.page_id,
+//       page_name: user.page_name,
+//       page_description: user.page_description
+//     }
+//   } catch (err) {
   
-  // data.map(x=>x+1)
-  let msg;
-  if (index == -1) {
-    data.push({page_id,page_name,page_description});
-    msg = "your page has been added"
+//     err = "non valid";
+//   }
+  
+//   ctx.body = "page added into your account";
+// }
 
-  }
-  else {
-    data[index] = {page_id,page_name,page_description};
-    msg = "your page has been upgaraded"
-  }
-  ctx.body = msg;
-}
-router.put('/updatepage', updatepage)
 
-// delete
+// router.post('/createpage', createpage)
 
-const deletepage = (ctx) => {
+
+
+// //read page data
+// let readpage = (ctx) => {
+
+//   ctx.body = data
+// }
+// router.get('/readpage', readpage)
+// // ===============================================================
+
+// router.post('/readpage1', async (ctx) => {
+//   const {page_id,page_name,page_description}=ctx.request.body;
+
+//   const getmaindata = await mongo.collection("user").findOne({
+//     page_id
+
+//   })
+//   ctx.body = {
+//     "message": "WELCOME TO YOUR PAGE",
+//     "response": page_id,page_name,page_description,
+//     "msg":"you can CRUD on this page",
+//     "mesg":"you can CRUD post on this page"
+//   }
+//   });
+
+
+// // =================================================================
+// // user can add pages into it
+// const addpage = (ctx) => {
+//   const page = ctx.request.body;  //
+//   data.push(page)
+//   ctx.body = "page has been added";
+
+// }
+// router.post('/addpage', addpage)
+
+
+// const updatepage = (ctx) => {
+//   let {page_id,page_name,page_description} = ctx.request.body
+//   const index = data.findIndex((e => e.id === page_id.id)) //itrate
+  
+//   // data.map(x=>x+1)
+//   let msg;
+//   if (index == -1) {
+//     data.push({page_id,page_name,page_description});
+//     msg = "your page has been added"
+
+//   }
+//   else {
+//     data[index] = {page_id,page_name,page_description};
+//     msg = "your page has been upgaraded"
+//   }
+//   ctx.body = msg;
+// }
+// router.put('/updatepage', updatepage)
+
+// // delete
+
+// const deletepage = (ctx) => {
  
-  let {page_id,page_name,page_description} = ctx.request.body
-  const indexpage = data.findIndex((e) => e.id === page_id.id)
-  let msg;
+//   let {page_id,page_name,page_description} = ctx.request.body
+//   const indexpage = data.findIndex((e) => e.id === page_id.id)
+//   let msg;
 
-  if (indexpage == -1) {
-    delete data[indexpage];
-    // msg = "your page has been deleted"
-  }
-  msg = "your page has been deleted"
-  ctx.body = msg
-  //ctx.throw(200,"page deleted successfully")
+//   if (indexpage == -1) {
+//     delete data[indexpage];
+//     // msg = "your page has been deleted"
+//   }
+//   msg = "your page has been deleted"
+//   ctx.body = msg
+//   //ctx.throw(200,"page deleted successfully")
 
-}
+// }
 
-router.delete('/deletepage', deletepage)
+// router.delete('/deletepage', deletepage)
 
 
 
@@ -353,82 +173,83 @@ router.delete('/deletepage', deletepage)
 //===========================================================================================================================================
 //===========================================================================================================================================
 //creating posts
-const createpost = (ctx) => {
-  const { post_id, post_type, post_link } = ctx.request.body
-  data.push({ post_id, post_type, post_link })
-  ctx.body = "successfully post ";
-}
+//main post
+// const createpost = (ctx) => {
+//   const { post_id, post_type, post_link } = ctx.request.body
+//   data.push({ post_id, post_type, post_link })
+//   ctx.body = "successfully post ";
+// }
 
-var postdata = [    //creating demo pages from serrver
-  { "post_id": 1, "post_type": "demo_post", "post_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIcAn1WPzyTrEw864Gjm-8n092HFaYkCJHg&usqp=CAU" }
+// var postdata = [    //creating demo pages from serrver
+//   { "post_id": 1, "post_type": "demo_post", "post_link": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPIcAn1WPzyTrEw864Gjm-8n092HFaYkCJHg&usqp=CAU" }
 
-]
-router.post('/createpost', createpost)
+// ]
+// router.post('/createpost', createpost)
 
-try {
-  let user = CRED.create(sanitize({ //rmv illgl char from data 
-    post_id, post_type, post_link
-  }))
-  ctx.session.user = {  //st
-    post_id: user.post_id,
-    post_type: user.post_type,
-    post_link: user.post_link
-  }
-} catch (err) {
-  err = "not valid please recreat the post ";
-}
+// try {
+//   let user = CRED.create(sanitize({ //rmv illgl char from data 
+//     post_id, post_type, post_link
+//   }))
+//   ctx.session.user = {  //st
+//     post_id: user.post_id,
+//     post_type: user.post_type,
+//     post_link: user.post_link
+//   }
+// } catch (err) {
+//   err = "not valid please recreat the post ";
+// }
 
-//read post data
-let readpost = (ctx) => {
+// //read post data
+// let readpost = (ctx) => {
 
-  ctx.body = postdata
-}
-router.get('/readpost', readpost)
+//   ctx.body = postdata
+// }
+// router.get('/readpost', readpost)
 
-// user can add pages into it
-const addpost = (ctx) => {
-  const post = ctx.request.body;  //
-  postdata.push(post)
-  ctx.body = "post has been added";
+// // user can add pages into it
+// const addpost = (ctx) => {
+//   const post = ctx.request.body;  //
+//   postdata.push(post)
+//   ctx.body = "post has been added";
 
-}
-router.post('/addpost', addpost)
+// }
+// router.post('/addpost', addpost)
 
 
-const updatepost = (ctx) => {
-  let { post_id, post_type, post_link } = ctx.request.body
-  const index = postdata.findIndex((e => e.id === post_id.id))
-  let msg;
-  if (index == -1) {
-    postdata.push({ post_id, post_type, post_link });
-    msg = "your page has been added"
+// const updatepost = (ctx) => {
+//   let { post_id, post_type, post_link } = ctx.request.body
+//   const index = postdata.findIndex((e => e.id === post_id.id))
+//   let msg;
+//   if (index == -1) {
+//     postdata.push({ post_id, post_type, post_link });
+//     msg = "your page has been added"
 
-  }
-  else {
-    postdata[index] = { post_id, post_type, post_link };
-    msg = "your page has been upgaraded"
-  }
-  ctx.body = msg;
-}
-router.put('/updatepost', updatepost)
+//   }
+//   else {
+//     postdata[index] = { post_id, post_type, post_link };
+//     msg = "your page has been upgaraded"
+//   }
+//   ctx.body = msg;
+// }
+// router.put('/updatepost', updatepost)
 
-// delete
+// // delete
 
-const deletepost = (ctx) => {
+// const deletepost = (ctx) => {
 
-  let { post_id, post_type, post_link } = ctx.request.body
-  const index = postdata.findIndex((e) => e.id === post_id.id)
-  let msg;
+//   let { post_id, post_type, post_link } = ctx.request.body
+//   const index = postdata.findIndex((e) => e.id === post_id.id)
+//   let msg;
 
-  if (index == -1) {
-    delete postdata[index];
+//   if (index == -1) {
+//     delete postdata[index];
   
-  }
-  msg = "your page has been deleted"
-  ctx.body = msg
+//   }
+//   msg = "your page has been deleted"
+//   ctx.body = msg
 
-}
-router.delete('/deletepost', deletepost)
+// }
+// router.delete('/deletepost', deletepost)
 
 // ==============================================================================================
 const likepost = (ctx) => {
@@ -451,73 +272,7 @@ const comment = (ctx) => {
 }
 router.post('/comment', comment)
 //======================================================================================================================================================
-//reset passwd
 
-// const service= {
-
-//   async sendToken(req,res,next){
-//       let user= await mongo.users.findOne({email:req.body.email})
-//       console.log(user)
-//       if(!user) res.status(400).send("User doesnot exists")
-
-//       if(user.resetToken) 
-//       {
-//           let data= await mongo.users.update({email:user.email},{$unset:{resetToken:1,resetExpire:1}})
-//           console.log(data)
-//       }
-//       // creating a string and hashing using bcrypt
-//       let token=crypto.randomBytes(32).toString("hex")
-//       let hashToken=await bcrypt.hash(token,Number(12))
-//       console.log(token,hashToken)
-//       //creating expiry after 1 hour
-//       let expiry= new Date(Date.now()+ (1*3600*1000) )
-//       //updating the users table with resetToken and resetExpire
-//       let data= await mongo.users.findOneAndUpdate({email:user.email},{$set:{resetToken:hashToken,resetExpire:expiry}},{ReturnDocument: "after" })
-//       console.log(data)
-
-//       const link=`https://gracious-keller-611545.netlify.app/resetPassword/${user._id}/${token}`
-
-//       await sendMail(user.email,"Password Reset",link)
-
-//       res.status(200).send("Link sent to email")  
-//   },
-//   async verifyToken(req,res,next){
-//       let user= await mongo.users.findOne({_id:ObjectId(req.params.userId)});
-//   if(!user) return res.status(400).send("Invalid link or expired")
-
-//   let token=req.params.token
-
-//   const isValid= await bcrypt.compare(token,user.resetToken)
-//   const expire =   user.resetExpire > Date.now()
-
-//   if( isValid &&  expire ){
-//       res.status(200).send({success:true})
-//   }
-//   else res.status(400).send({Error:"invalid link or expired"})
-//   },
-
-
-//   async verifyAndUpdatePassword(req,res,next){
-//       let user= await mongo.users.findOne({_id:ObjectId(req.params.userId)});
-//   if(!user.resetToken) return res.status(400).send("Invalid link or expired")
-
-//   let token=req.params.token
-
-//   const isValid= await bcrypt.compare(token,user.resetToken)
-//   const expire =   user.resetExpire > Date.now()
-//    console.log(Date.now(), user.resetExpire.getTime(),expire)
-//    if( isValid &&  expire )
-//    {
-//        const password =req.body.password;
-//        const hashPassword =await bcrypt.hash(password,Number(12))
-//        console.log(hashPassword)
-//        let data= await mongo.users.findOneAndUpdate({_id:ObjectId(req.params.userId)},{$set:{password:hashPassword},$unset:{resetToken:1,resetExpire:1}},{ReturnDocument: "after" })
-//        console.log(data)
-//        res.status(200).send("password updated successfully")
-//    }
-//    else res.status(400).send("Invalid link or expired")
-//   }
-// }
 
 router.post('/forgotPassword', async (ctx) => {
 
@@ -620,15 +375,54 @@ router.put('/:id', async ctx => {
   ctx.response.status = 200;
   ctx.body = pro;
 })
+//=======================================
+const {login}=require('../api/login_api')
+router.post('/login',login)
+//=============================================
+const {profile}=require('../api/profile_api')
+router.post('/profile',profile);
+//=============================================================
+//PAGE ROUTES
+const {createpage,readpage,readpage1,addpage,updatepage,deletepage}=require('../api/page_api')
+const Router = require('koa-router')
+router.post('/createpage', createpage)
+router.get('/readpage', readpage)
+router.post('readpage1',readpage1)
+router.post('/addpage', addpage)
+router.put('/updatepage', updatepage)
+router.delete('/deletepage', deletepage)
+// POST ROUTES
+const{createpost, readpost,addpost,updatepost,deletepost}=require('../api/post_api')
+router.post('/createpost', createpost)
+router.get('/readpost', readpost)
+router.post('/addpost', addpost)
+router.put('/updatepost', updatepost)
+router.delete('/deletepost', deletepost)
 
 module.exports = router;
 
+//===========================================
+//importing page crud
+// const {updatepage}=require('../api/page_api')
+// const {addpage}=require('../api/page_api')
+// const {readpage1}=require('../api/page_api')
+// const {readpage}=require('../api/page_api')
+// const {deletepage}=require('../api/page_api')
+
+//===============================================================
 
 
 
 
 
 
+
+
+
+
+//=====================================================================================
+//=====================================================================================
+//=====================================================================================
 
 // bup
 // register
@@ -667,3 +461,263 @@ module.exports = router;
 //   ctx.body=pro;
 // })
 
+
+
+//register main 
+// console.log("1")
+// router.post('/register',  (ctx,mdlwr) => {
+//   console.log("2")
+
+
+//   let { first, last, email, password, confirmPassword } = ctx.request.body //wobp mdwr
+
+//   if (!(first && last && email && password && confirmPassword)) {
+//     throw 'All fields are required'
+//   }
+//   let index;
+//   if (index = CRED.findIndex((e) => e.id === email)) {
+//     throw 'this email already used'
+//   }
+
+//   if (password !== confirmPassword) {
+//     throw 'Passwords must match'
+//   }
+//   mdlwr()
+
+//   //DB 
+//   try {
+//     console.log("db")
+//     const user = CRED.create(sanitize({ //rmv illgl char from data 
+//       first, last, email, password
+//     }))
+//     console.log("db2")
+//     ctx.session.user = {  //st
+//       first: user.first,
+//       last: user.last,
+//       email: user.email
+//     }
+//     console.log("db3")
+//     ctx.redirect('/profile')
+//     console.log("db4")
+//   } catch (err) {
+//     // ctx.session.errorMessage= 'invalid details pls enter prpr details' 
+//     // errorMessage=ctx.session.errorMessage= 'invalid details pls enter prpr details' ;
+//     // ctx.session.errorMessage = 'invalid details pls enter prpr details'
+//     ctx.throw(400, 'not valid')
+
+//     ctx.redirect('/register')
+//   }
+// })
+
+
+
+// console.log("1")
+// router.get('/register', async (ctx)=>{
+//     console.log("2")
+//     // if(typeof(errorMessage) == 'undefined') {
+//     //     ctx.body = "errorr";
+//     //   }
+//   await ctx.render('register', {
+//     csrfToken: ctx.csrf,
+//     errorMessage: ctx.session.errorMessage,
+
+
+//   })
+//   console.log("3")
+
+//   ctx.session.errorMessage = ''  //rst err msgs
+//  })
+
+// router.get('/login', async (ctx)=>{                                  
+//   await ctx.render('login', {
+//     csrfToken: ctx.csrf,
+//     errorMessage: ctx.session.errorMessage
+//   })
+
+//   //eventually reset error messages
+//   ctx.session.errorMessage = ''
+// })
+
+
+
+//reg
+
+// async register(ctx) {
+//     const { body } = ctx.request;
+//     try {
+//       if (!body.username || !body.password) {
+//         ctx.status = 400;
+//         ctx.body = {
+//           error: `expected an object with username, password but got: ${body}`,
+//         }
+//         return;
+//       }
+//       body.password = await bcrypt.hash(body.password, 5)
+//       let user = await User.find({ username: body.username });
+//       if (!user.length) {
+//         const newUser = new User(body);
+//         user = await newUser.save();
+//         ctx.status = 200;
+//         ctx.body = {
+//           Message: 'registration succeeded',
+//           user,
+//         }
+//       } else {
+//         ctx.status = 406;
+//         ctx.body = {
+//           Message: 'user name already exists',
+//         }
+//       }
+//     } catch (error) {
+//       ctx.throw(500)
+//     }
+//   }
+
+
+// //login
+// async login(ctx) {
+//     const { body } = ctx.request
+//     try {
+//       const user = await User.findOne({ username: body.username });
+//       if (!user) {
+//         ctx.status = 401
+//         ctx.body = {
+//           Message: 'user name error',
+//         }
+//         return;
+//       }
+//       //Is the matching password equal
+//       if (await bcrypt.compare(body.password, user.password)) {
+//         ctx.status = 200
+//         ctx.body = {
+//           Message: 'login succeeded',
+//           user: user.userInfo,
+//           //The token is generated and returned to the client
+//           token: jsonwebtoken.sign({
+//             data: user,
+//             //Set token expiration time
+//             exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
+//           }, secret),
+//         }
+//       } else {
+//         ctx.status = 401
+//         ctx.body = {
+//           Message: 'password error',
+//         }
+//       }
+//     } catch (error) {
+//       ctx.throw(500)
+//     }
+//   }
+
+
+
+  //     r1.connect((err, db) =>{   //MongoClient
+  //       console.log("3")
+  //         if (err) throw err;
+  //         console.log("4")
+  //         var dbo = db.db("CRED");
+  //         console.log("4")
+  //         const getdatamain=await dbo.collection("user").findOne({
+
+  //             email: ctx.body
+  //         })
+
+  // //         function(err, result) {
+  // //             if (err) throw err;
+  // //             ctx.body=result;
+  // //             db.close();
+  // //             console.log("5")
+  //         // });
+  //         // console.log("6")
+  //     });
+  // console.log("7")
+
+
+
+//  const mainprodata=ctx.body;
+//  const {first,last,email}=mainprodata;
+// })
+// =============================================================
+// find
+// var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb+srv://strongdemon:kdb65GK6zYJvRcg@strong.obgla.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-lnv1hu-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true";
+
+// MongoClient.connect(url, function(err, db) {
+//     if (err) throw err;
+//     var dbo = db.db("SOC_MANAGEMENT_SYTEM");
+
+//     dbo.collection("TENANT").find({}, { myobj: { HOME_ID: '61decfc17dc3064496e212f9'} }).toArray((err, result)=> {
+//       if (err) throw err;
+//       console.log(result);
+//       db.close();
+//     });
+//   });
+
+//reset passwd
+
+// const service= {
+
+//   async sendToken(req,res,next){
+//       let user= await mongo.users.findOne({email:req.body.email})
+//       console.log(user)
+//       if(!user) res.status(400).send("User doesnot exists")
+
+//       if(user.resetToken) 
+//       {
+//           let data= await mongo.users.update({email:user.email},{$unset:{resetToken:1,resetExpire:1}})
+//           console.log(data)
+//       }
+//       // creating a string and hashing using bcrypt
+//       let token=crypto.randomBytes(32).toString("hex")
+//       let hashToken=await bcrypt.hash(token,Number(12))
+//       console.log(token,hashToken)
+//       //creating expiry after 1 hour
+//       let expiry= new Date(Date.now()+ (1*3600*1000) )
+//       //updating the users table with resetToken and resetExpire
+//       let data= await mongo.users.findOneAndUpdate({email:user.email},{$set:{resetToken:hashToken,resetExpire:expiry}},{ReturnDocument: "after" })
+//       console.log(data)
+
+//       const link=`https://gracious-keller-611545.netlify.app/resetPassword/${user._id}/${token}`
+
+//       await sendMail(user.email,"Password Reset",link)
+
+//       res.status(200).send("Link sent to email")  
+//   },
+//   async verifyToken(req,res,next){
+//       let user= await mongo.users.findOne({_id:ObjectId(req.params.userId)});
+//   if(!user) return res.status(400).send("Invalid link or expired")
+
+//   let token=req.params.token
+
+//   const isValid= await bcrypt.compare(token,user.resetToken)
+//   const expire =   user.resetExpire > Date.now()
+
+//   if( isValid &&  expire ){
+//       res.status(200).send({success:true})
+//   }
+//   else res.status(400).send({Error:"invalid link or expired"})
+//   },
+
+
+//   async verifyAndUpdatePassword(req,res,next){
+//       let user= await mongo.users.findOne({_id:ObjectId(req.params.userId)});
+//   if(!user.resetToken) return res.status(400).send("Invalid link or expired")
+
+//   let token=req.params.token
+
+//   const isValid= await bcrypt.compare(token,user.resetToken)
+//   const expire =   user.resetExpire > Date.now()
+//    console.log(Date.now(), user.resetExpire.getTime(),expire)
+//    if( isValid &&  expire )
+//    {
+//        const password =req.body.password;
+//        const hashPassword =await bcrypt.hash(password,Number(12))
+//        console.log(hashPassword)
+//        let data= await mongo.users.findOneAndUpdate({_id:ObjectId(req.params.userId)},{$set:{password:hashPassword},$unset:{resetToken:1,resetExpire:1}},{ReturnDocument: "after" })
+//        console.log(data)
+//        res.status(200).send("password updated successfully")
+//    }
+//    else res.status(400).send("Invalid link or expired")
+//   }
+// }

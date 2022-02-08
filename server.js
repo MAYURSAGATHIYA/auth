@@ -23,27 +23,16 @@ const regRoute =require('./routes/regrt');
 const port = 4000;
 const Router = require('koa-router');
 const router = new Router();
-// const proRoutes=require('/rote')
 
 
-// const dbname = "CRED";
-// MongoClient.connect(url, (err,client)=>{
-//     if(!err) {
-//         console.log("successful connection with the database");  
-//     }
-//     else
-//         console.log("Error in the connectivity");
-// })
-// router.get('/', (ctx) => {
-//     ctx.body = 'ok'
-    
-// })
 
 
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(regRoute.routes()).use(regRoute.allowedMethods());
 
+const {router:proute}=require("./api/post_api")
+app.use(proute.routes()).use(proute.allowedMethods());
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)

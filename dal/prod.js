@@ -15,7 +15,7 @@ const getAll = async () => {
 
     return cursor.toArray();
 }
-console.log("jhv")
+// console.log("jhv")
 // ================================================================
 const getById = async (id) => {
     return await products.findOne({ _id: ObjectId });
