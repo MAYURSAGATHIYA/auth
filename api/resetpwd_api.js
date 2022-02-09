@@ -1,0 +1,148 @@
+const koa = require('koa')
+// const srvr = require('../server')
+const koaRouter = require('koa-router')
+const router = new koaRouter()
+
+const crypto = require("crypto")
+const bcrypt = require("bcrypt")
+
+
+// router.post('/forgotPassword', async (ctx) => {
+
+const rstpwd=  async (ctx)=>{
+    const service = {
+      async sendToken(ctx) {
+          console.log("rst")
+        let user = await mongo.users.findOne({ email: req.body.email })
+        console.log(user)
+        if (!user) ctx.status(403).ctx.body("User doesnot exists")
+  
+        if (user.resetToken) {
+          let data = await mongo.users.update({ email: user.email }, { $unset: { resetToken: 1, resetExpire: 1 } })
+          console.log(data)
+        }
+        // crt str and hashing it
+        let token = crypto.randomBytes(32).toString("hex")   //each byte is converted to the 2-digit base-16 encoding of that byte
+        let hashToken = await bcrypt.hash(token, Number(12))
+        console.log(token, hashToken)
+        let data = await mongo.users.findOneAndUpdate({ email: user.email }, { $set: { resetToken: hashToken } }, { ReturnDocument: "after" })
+        console.log(data)
+  
+  
+        await ctx.body(user.email, "Password Reset")
+  
+      },
+      async verifyToken(ctx, next) {
+        let user = await mongo.users.findOne({ _id: ObjectId(req.params.userId) });
+        if (!user) return ctx.status(400).ctx, body("Invalid link or expired")
+  
+        let token = req.params.token
+  
+        const isValid = await bcrypt.compare(token, user.resetToken)
+        const expire = user.resetExpire > Date.now()
+  
+        if (isValid && expire) {
+          ctx.status(200).ctx.body({ success: true })
+        }
+        else ctx.status(401).ctx.body({ Error: "invalid link or expired" })
+      },
+  
+  
+      async verifyAndUpdatePassword(ctx, next) {
+        let user = await mongo.users.findOne({ _id: ObjectId(req.params.userId) });
+        if (!user.resetToken) return ctx.status(400).ctx.body("Invalid link or expired")
+  
+        let token = req.params.token
+  
+        const isValid = await bcrypt.compare(token, user.resetToken)
+        const expire = user.resetExpire > Date.now()
+        console.log(Date.now(), user.resetExpire.getTime(), expire)
+        if (isValid && expire) {
+          const password = req.body.password;
+          const hashPassword = await bcrypt.hash(password, Number(12))
+          console.log(hashPassword)
+          let data = await mongo.users.findOneAndUpdate({ _id: ObjectId(req.params.userId) }, { $set: { password: hashPassword }, $unset: { resetToken: 1, resetExpire: 1 } }, { ReturnDocument: "after" })
+          console.log(data)
+          ctx.status(200).ctx.body("password updated successfully")
+        }
+        else ctx.status(401).ctx.body("Invalid link or expired")
+      }
+      
+    }
+  
+//reset passwd
+
+// const service= {
+
+//   async sendToken(req,res,next){
+//       let user= await mongo.users.findOne({email:req.body.email})
+//       console.log(user)
+//       if(!user) res.status(400).send("User doesnot exists")
+
+//       if(user.resetToken) 
+//       {
+//           let data= await mongo.users.update({email:user.email},{$unset:{resetToken:1,resetExpire:1}})
+//           console.log(data)
+//       }
+//       // creating a string and hashing using bcrypt
+//       let token=crypto.randomBytes(32).toString("hex")
+//       let hashToken=await bcrypt.hash(token,Number(12))
+//       console.log(token,hashToken)
+//       //creating expiry after 1 hour
+//       let expiry= new Date(Date.now()+ (1*3600*1000) )
+//       //updating the users table with resetToken and resetExpire
+//       let data= await mongo.users.findOneAndUpdate({email:user.email},{$set:{resetToken:hashToken,resetExpire:expiry}},{ReturnDocument: "after" })
+//       console.log(data)
+
+//       const link=`https://gracious-keller-611545.netlify.app/resetPassword/${user._id}/${token}`
+
+//       await sendMail(user.email,"Password Reset",link)
+
+//       res.status(200).send("Link sent to email")  
+//   },
+//   async verifyToken(req,res,next){
+//       let user= await mongo.users.findOne({_id:ObjectId(req.params.userId)});
+//   if(!user) return res.status(400).send("Invalid link or expired")
+
+//   let token=req.params.token
+
+//   const isValid= await bcrypt.compare(token,user.resetToken)
+//   const expire =   user.resetExpire > Date.now()
+
+//   if( isValid &&  expire ){
+//       res.status(200).send({success:true})
+//   }
+//   else res.status(400).send({Error:"invalid link or expired"})
+//   },
+
+
+//   async verifyAndUpdatePassword(req,res,next){
+//       let user= await mongo.users.findOne({_id:ObjectId(req.params.userId)});
+//   if(!user.resetToken) return res.status(400).send("Invalid link or expired")
+
+//   let token=req.params.token
+
+//   const isValid= await bcrypt.compare(token,user.resetToken)
+//   const expire =   user.resetExpire > Date.now()
+//    console.log(Date.now(), user.resetExpire.getTime(),expire)
+//    if( isValid &&  expire )
+//    {
+//        const password =req.body.password;
+//        const hashPassword =await bcrypt.hash(password,Number(12))
+//        console.log(hashPassword)
+//        let data= await mongo.users.findOneAndUpdate({_id:ObjectId(req.params.userId)},{$set:{password:hashPassword},$unset:{resetToken:1,resetExpire:1}},{ReturnDocument: "after" })
+//        console.log(data)
+//        res.status(200).send("password updated successfully")
+//    }
+//    else res.status(400).send("Invalid link or expired")
+//   }
+// }
+
+//   })
+  =
+}
+
+
+module.exports={
+    rstpwd
+}
