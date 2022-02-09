@@ -2,6 +2,11 @@ const koa = require('koa')
 const srvr = require('../server')
 const koaRouter = require('koa-router')
 const router = new koaRouter()
+
+const {createpage,readpage,readpage1,addpage,updatepage,deletepage}=require('../api/page_api')
+const{createpost, readpost,addpost,updatepost,deletepost}=require('../api/post_api')
+const {profile}=require('../api/profile_api')
+const {login}=require('../api/login_api')
 // const session = require('koa-session');   //other
 
 // const mdlwr = require('../middleware')
@@ -378,14 +383,13 @@ router.put('/:id', async ctx => {
   
 })
 //=======================================
-const {login}=require('../api/login_api')
+
 router.post('/login',login)
 //=============================================
-const {profile}=require('../api/profile_api')
+
 router.post('/profile',profile);
 //=============================================================
 //PAGE ROUTES
-const {createpage,readpage,readpage1,addpage,updatepage,deletepage}=require('../api/page_api')
 const Router = require('koa-router')
 router.post('/createpage', createpage)
 router.get('/readpage', readpage)
@@ -394,7 +398,6 @@ router.post('/addpage', addpage)
 router.put('/updatepage', updatepage)
 router.delete('/deletepage', deletepage)
 // POST ROUTES
-const{createpost, readpost,addpost,updatepost,deletepost}=require('../api/post_api')
 router.post('/createpost', createpost)
 router.get('/readpost', readpost)
 router.post('/addpost', addpost)

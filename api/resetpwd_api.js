@@ -139,7 +139,7 @@ const rstpwd=  async (ctx)=>{
 // }
 
 //   })
-  =
+  
 }
 
 

@@ -4,6 +4,7 @@ const router = new koaRouter()
 const mongo = require('../dal/index.js').db('CRED');
 const ObjectId = require('mongodb').ObjectId;
 console.log("ok2")
+
 router.get('/home', (context) => {
     context.body = "Welcome to my Koa.js Server"
 })
@@ -41,9 +42,9 @@ const createpage = (ctx) => {
 //==============================================================
 const readpage = (ctx) => {
 
-    msg="skn"
-    ctx.body=msg
-    // ctx.body = data
+    // msg="skn"
+    // ctx.body=msg
+    ctx.body = data
 }
 // router.get('/readpage', readpage)
 // ===============================================================

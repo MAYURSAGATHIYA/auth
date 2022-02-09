@@ -4,7 +4,8 @@ const router = new koaRouter()
 // const mongo = require('../dal/index.js').db('CRED');
 // const ObjectId = require('mongodb').ObjectId;
 console.log("ok2")
-router.post('/home', (ctx) => {
+
+router.get('/hom', (ctx) => {
     console.log("vdfvdbjdbvb")
     ctx.body = "Welcome to my Koa.js Server"
 })
