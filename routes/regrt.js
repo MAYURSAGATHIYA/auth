@@ -760,6 +760,7 @@ router.post('/profile',profile);
 
 //new routes for api
 //routes for pages
+
 const {  createpage,getpages,getpage,delpage,updatepage} = require('../api/page_api');
 
 router.get('/getpages', async ctx => {
@@ -797,4 +798,6 @@ router.put('/:id', async ctx => {
 })
 
 module.exports=router;
+
+
 //=========================
