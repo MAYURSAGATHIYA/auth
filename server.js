@@ -31,8 +31,8 @@ const router = new Router();
 app.use(router.routes()).use(router.allowedMethods());
 app.use(regRoute.routes()).use(regRoute.allowedMethods());
 
-const {router:proute}=require("./api/post_api")
-app.use(proute.routes()).use(proute.allowedMethods());
+// const {router:proute}=require("./api/post_api")
+// app.use(proute.routes()).use(proute.allowedMethods());
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
