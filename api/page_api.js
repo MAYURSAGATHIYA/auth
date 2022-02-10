@@ -37,8 +37,6 @@ const createpage = (ctx) => {
 
     ctx.body = "page added into your account";
 }
-// router.post('/createpage', createpage)
-// router.route("/createpage").post(createpage)  
 //==============================================================
 const readpage = (ctx) => {
 

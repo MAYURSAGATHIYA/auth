@@ -1,9 +1,3 @@
-// const validator = require('validatorjs');
-// const validator=new Validator();
-// const emailreg = RegExp(
-//     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-//   );
-
 try{
 
 }catch(err){
