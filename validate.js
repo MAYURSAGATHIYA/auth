@@ -8,3 +8,5 @@
 
 //     module.exports=Validator.register('strict',value=>email.test(value),'not valid')
 // }
+// mdlwr Validator
+// jwt

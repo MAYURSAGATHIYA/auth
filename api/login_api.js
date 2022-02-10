@@ -1,3 +1,4 @@
+// const { message } = require('koa/lib/response');
 
 // router.post('/login', async (ctx) => {
   const login= async (ctx)=>{
@@ -6,6 +7,7 @@
     
     const ObjectId = require('mongodb').ObjectId;
     const dtbs2 = require('../dal/prod')
+    
     
       const {email,password}=ctx.request.body;
     
@@ -17,6 +19,8 @@
         "message": "successfully logged in",
         "response": getmaindata}
       }
+
+
     // })
     module.exports={login}
 

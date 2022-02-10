@@ -2,7 +2,6 @@ const  { getAll, getById, removeById, save, update } = require('../dal/prod');
 
 const createpro=async({first,last,email,password,confirmpassword})=>{
 
-
     const pro={
         first,
         last,
