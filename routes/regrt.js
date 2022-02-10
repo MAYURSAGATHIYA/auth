@@ -7,13 +7,14 @@ const router = new koaRouter()
 // const{createpost, readpost,addpost,updatepost,deletepost}=require('../api/post_api')
 const {profile}=require('../api/profile_api')
 const {login}=require('../api/login_api')
+const { createpro, getpro, getpros, uppro, delpro } = require('../api/pro_api');
+const {  createpage,getpages,getpage,delpage,updatepage} = require('../api/page_api');
 
 
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
 //register
-const { createpro, getpro, getpros, uppro, delpro } = require('../api/pro_api');
 
 router.get('/getpros', async ctx => {
   ctx.body = await getpros();
@@ -56,7 +57,6 @@ router.post('/profile',profile);
 
 //new routes for api
 //routes for pages
-const {  createpage,getpages,getpage,delpage,updatepage} = require('../api/page_api');
 
 router.get('/getpages', async ctx => {
   ctx.body = await getpages();

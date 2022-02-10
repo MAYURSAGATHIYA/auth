@@ -7,16 +7,24 @@
     const ObjectId = require('mongodb').ObjectId;
     const dtbs2 = require('../dal/prod')
     
-      const {email,password}=ctx.request.body;
     
+      const {email,password}=ctx.request.body;
+    try{
       const getmaindata = await mongo.collection("user").findOne({
-        email
+        email,password
     
       })
       ctx.body = {
         "message": "successfully logged in",
-        "response": getmaindata}
+        "response": getmaindata
       }
+    }catch(err){
+      ctx.body = {
+        "message": "please enter valid id and password",
+       
+      }
+  }
+}
     // })
     module.exports={login}
 
