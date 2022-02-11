@@ -1,12 +1,23 @@
+// const context = require('koa/lib/context');
+
 const products = require('./index').db('CRED').collection('user');
 
 const ObjectId = require('mongodb').ObjectId;
 
 // ================================================================
-const save = async ({ first, last, email, password, confirmpassword }) => {
+const save = async ({ first, last, email, password, confirmpassword },ctx) => {
+    try{
     const result = await products.insertOne({ first, last, email, password, confirmpassword });
-
+    // if(!{first,last,email,password,confirmpassword})
+    //   {
+    //       ctx.body='please fill all fields'
+    //     }
     return result;//.ops[0];
+    
+    }catch(err){
+        ctx.body="you can't register"
+    }
+    
 }
 // ================================================================
 const getAll = async () => {

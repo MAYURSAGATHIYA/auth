@@ -1,7 +1,7 @@
 const mongo = require('../dal/index.js').db('CRED');
 
 const ObjectId = require('mongodb').ObjectId;
-const dtbs2 = require('../dal/prod')
+const dtbs2 = require('../dal/query')
 const profile=async (ctx)=>{
 // router.post('/profile', async (ctx) => {
   console.log("2")

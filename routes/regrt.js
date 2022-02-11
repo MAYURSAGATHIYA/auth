@@ -7,9 +7,10 @@ const router = new koaRouter()
 // const{createpost, readpost,addpost,updatepost,deletepost}=require('../api/post_api')
 const {profile}=require('../api/profile_api')
 const {login}=require('../api/login_api')
-const { createpro, getpro, getpros, uppro, delpro } = require('../api/pro_api');
+const pro_api = require('../api/pro_api');
 const {  createpage,getpages,getpage,delpage,updatepage} = require('../api/page_api');
-
+const query=require('../dal/query')
+// const validate=require('../middleware.js')
 
 
 router.get('/home', (context) => {
@@ -58,18 +59,19 @@ router.get('/getpros', async ctx => {
 //   next();
 //   console.log("demo")
 //   }
+const validate=(ctx,next)=>{
 
-const middleware=require('../middleware.js')
 
-router.post('/createpro',middleware, async ctx => {
-  console.log("mdlwr")
-  let pro = ctx.request.body;
-  pro = await createpro(pro);
+  const{first,last,email,password,confirmpassword} = ctx.request.body
+  const userinput ={first,last,email,password,confirmpassword} 
+  if(!userinput) ctx.throw('please fill all fields',403)
+  next();
+  console.log("vldt")
+}
 
-  ctx.response.status = 200;
-  ctx.body = pro;
+router.post('/createpro',validate,pro_api.createpro)
 
-})
+// module.exports={first,last,email,password,confirmpassword}
 //========================
 // const middleware=(ctx,next)=>{
 //   console.log("middwllwed")
@@ -149,20 +151,20 @@ router.post('/createpro',middleware, async ctx => {
 
 router.get("/:id", async ctx => {
   const id = ctx.params.id;
-  ctx.body = await getpro(id);
+  ctx.body = await pro_api.getpro(id);
 })
 
 router.delete('/:id', async ctx => {
 
   const id = ctx.params.id;
-  await delpro(id);
+  await pro_api.delpro(id);
 })
 
 router.put('/:id', async ctx => {
 
   const id = ctx.params.id;
   let pro = ctx.request.body;
-  pro = await uppro(pro);
+  pro = await pro_api.uppro(pro);
   ctx.response.status = 200;
   ctx.body = pro;
   
