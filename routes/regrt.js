@@ -5,11 +5,11 @@ const router = new koaRouter()
 
 // const {createpage,readpage,readpage1,addpage,updatepage,deletepage}=require('../api/page_api')
 // const{createpost, readpost,addpost,updatepost,deletepost}=require('../api/post_api')
-const {profile}=require('../api/profile_api')
-const {login}=require('../api/login_api')
+const { profile } = require('../api/profile_api')
+const { login } = require('../api/login_api')
 const pro_api = require('../api/pro_api');
-const {  createpage,getpages,getpage,delpage,updatepage} = require('../api/page_api');
-const query=require('../dal/query')
+const { createpage, getpages, getpage, delpage, updatepage } = require('../api/page_api');
+const query = require('../dal/query')
 // const validate=require('../middleware.js')
 
 
@@ -21,75 +21,39 @@ router.get('/home', (context) => {
 router.get('/getpros', async ctx => {
   ctx.body = await getpros();
 })
-//=========================
-// const middleware=(ctx,next)=>{
-
-//     const validationRule = {
-//         "first": "required|string",
-//         "last": "required|string",
-//         "email": "required|string",
-//         "password": "required|string|min:6|confirmed",
-//         "confirmpassword": "password"
-//     }
-//     const validate=(ctx, validationRule, (err, status) => {
-
-//       let password = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-//       {
-//           module.exports = validate('strict', value => password.test(value), 'not valid');
-//       }
-//       let email = /^[\w\.]+@([\w]+\.)+[\w]{2,4}$/g
-//       {
-  
-//           module.exports = validate('strict', value => email.test(value), 'not valid')
-//       }
-
-//         if (!status) {
-//             ctx.status(403)
-//                 .send({
-//                     success: false,
-//                     message: 'Validation failed',
-//                     data: err
-//                 });
-//         } else {
-//             ctx.body="you've entered correct validations"
-//         }
-//     });
-   
-//   console.log("middwllwed")
-//   next();
-//   console.log("demo")
-//   }
-const validate=(ctx,next)=>{
+const middleware = (ctx, next) => {
 
 
-  const{first,last,email,password,confirmpassword} = ctx.request.body
-  const userinput ={first,last,email,password,confirmpassword} 
-  if(!userinput) ctx.throw('please fill all fields',403)
+  const { first, last, email, password, confirmpassword } = ctx.request.body
+
+
+
+  if (!(first && last && email && password && confirmpassword)) {
+
+
+    if (!(first && last && email && password && confirmpassword)) {
+      const registration_details = { first, last, email, password, confirmpassword }
+      const fieldKeys = Object.keys(registration_details)
+      const a = fieldKeys.map(key => !registration_details[key] ? key : 'THIS FIELD INSERTED PROPER')
+      ctx.status=403;
+      ctx.body={
+        msg: "true",
+        message: "Validation Failed. Please enter required fields",
+        fields: a
+      }
+    return
+    }
+    // ctx.throw('validation error', 403)
+  }
+  else if (password !== confirmpassword) {
+    ctx.throw('password is different please enter same password', 403)
+  }
   next();
   console.log("vldt")
+
 }
 
-router.post('/createpro',validate,pro_api.createpro)
-
-// module.exports={first,last,email,password,confirmpassword}
-//========================
-// const middleware=(ctx,next)=>{
-//   console.log("middwllwed")
-//   next()
-//   }
-  
-// router.post('/createpro', middleware, async(ctx)=>{
-
-//   let pro = ctx.request.body;
-//   pro = await createpro(pro);
-
-//   ctx.response.status = 200;
-//   ctx.body = pro;
-
-
-// })
-//======================================
-
+router.post('/createpro', middleware, pro_api.createpro)
 
 
 
@@ -139,15 +103,6 @@ router.post('/createpro',validate,pro_api.createpro)
 //======================================
 
 
-//================
-// router.post('/createpro', async ctx => {
-//   let pro = ctx.request.body;
-//   pro = await createpro(pro);
-
-//   ctx.response.status = 200;
-//   ctx.body = pro;
-
-// })
 
 router.get("/:id", async ctx => {
   const id = ctx.params.id;
@@ -167,10 +122,10 @@ router.put('/:id', async ctx => {
   pro = await pro_api.uppro(pro);
   ctx.response.status = 200;
   ctx.body = pro;
-  
+
 })
-router.post('/login',login)
-router.post('/profile',profile);
+router.post('/login', login)
+router.post('/profile', profile);
 //PAGE ROUTES
 
 //==========================================================
@@ -209,10 +164,10 @@ router.put('/:id', async ctx => {
   pro = await updatepage(pro);
   ctx.response.status = 200;
   ctx.body = pro;
-  
+
 })
 
-module.exports=router;
+module.exports = router;
 
 
 //=========================

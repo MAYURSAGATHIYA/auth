@@ -6,17 +6,14 @@ const ObjectId = require('mongodb').ObjectId;
 
 // ================================================================
 const save = async ({ first, last, email, password, confirmpassword },ctx) => {
-    try{
+    
     const result = await products.insertOne({ first, last, email, password, confirmpassword });
     // if(!{first,last,email,password,confirmpassword})
     //   {
     //       ctx.body='please fill all fields'
     //     }
-    return result;//.ops[0];
     
-    }catch(err){
-        ctx.body="you can't register"
-    }
+    return result;//.ops[0];
     
 }
 // ================================================================
