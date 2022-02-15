@@ -26,15 +26,16 @@ const getAll = async () => {
 // console.log("jhv")
 // ================================================================
 const getById = async (id) => {
-    return await products.findOne({ _id: ObjectId });
+    return await products.findOne({ _id: ObjectId(id) });
 }
 // ================================================================
 const update = async (id, { first, last, email, password, confirmpassword }) => {
     const result = await products.replaceOne({ _id: ObjectId(id) }, { first, last, email, password, confirmpassword });
-    return result.ops[0];
+    return result //.ops[0];
 }
 // ================================================================
 const removeById = async id => {
+    
     await products.deleteOne({ _id: ObjectId(id) });
 }
 
