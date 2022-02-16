@@ -1,28 +1,44 @@
-const posts = require('./index').db('CRED').collection('user');
+// const context = require('koa/lib/context');
+
+const products = require('./index').db('CRED').collection('postsdata');
 
 const ObjectId = require('mongodb').ObjectId;
 
-const save = async ( { post_id, post_type, post_link } ) => {
-    const result = await posts.insertOne( { post_id, post_type, post_link } );
-
+// ================================================================
+const save = async ({ post_id, post_type, post_link },ctx) => {
+    
+    const result = await products.insertOne({ post_id, post_type, post_link });
+    // if(!{first,last,email,password,confirmpassword})
+    //   {
+    //       ctx.body='please fill all fields'
+    //     }
+    
     return result;//.ops[0];
+    
 }
+// ================================================================
 const getAll = async () => {
 
-    const cursor = await posts.find();
+    const cursor = await products.find();
 
     return cursor.toArray();
 }
+// console.log("jhv")
+// ================================================================
 const getById = async (id) => {
-    return await posts.findOne({ _id: ObjectId });
+    return await products.findOne({ _id: ObjectId(id) });
 }
-const update = async (id, { post_id, post_type, post_link } ) => {
-    const result = await posts.replaceOne({ _id: ObjectId(id) },  { post_id, post_type, post_link });
-    return result.ops[0];
+// ================================================================
+const update = async (id, { post_id, post_type, post_link }) => {
+    const result = await products.replaceOne({ _id: ObjectId(id) }, { post_id, post_type, post_link });
+    return result //.ops[0];
 }
+// ================================================================
 const removeById = async id => {
-    await posts.deleteOne({ _id: ObjectId(id) });
+    
+    await products.deleteOne({ _id: ObjectId(id) });
 }
+
 
 module.exports = { getAll, getById, removeById, save, update };
 
