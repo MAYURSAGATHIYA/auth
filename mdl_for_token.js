@@ -25,7 +25,7 @@ const verifyToken = (ctx, next) => {
         ctx.token = bearerToken;
         
       } else {
-        // Forbidden
+        
         ctx.status=403;
         ctx.throw="not valid"
         return

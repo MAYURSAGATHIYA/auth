@@ -18,6 +18,7 @@ const createpage = async (ctx) => {
         "response": pagedata
     }
     await page_db.saveforpage(pagedata);
+    
     // console.log("syccessfukky registred")
 
 }

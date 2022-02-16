@@ -2,16 +2,13 @@ const verifyToken = require('../mdl_for_token.js')
 const koaRouter = require('koa-router')
 const router = new koaRouter()
 const pro_api = require('../api/pro_api');
-// const { profile } = require('../api/profile_api')
 const login_api = require('../api/login_api')
 const query = require('../dal/query')
 const koa = require('koa')
 const srvr = require('../server')
 const middleware_for_register = require('../middleware_for_register')
 const { likepost } = require('../api/like_api')
-
-//reg import
-const routelogic=require('./routelogic')
+const middleware_for_page=require('../middleware_for_page')
 
 //post import
 const { createpost,
@@ -37,20 +34,18 @@ router.delete('/delpro/:id', pro_api.delpro)
 router.put('/updateuser/:id', middleware_for_register.middleware,pro_api.uppro)
 //==========================================================
 // login
-router.post('/login', verifyToken, login_api.login)
+router.post('/login',  login_api.login)
 //profile
 const profile_api=require('../api/profile_api')
 router.post('/profile', verifyToken,profile_api.createprofile);
 router.post('/getprofiles', verifyToken,profile_api.getprofiles);
-router.get('/profile', verifyToken,profile_api.getprofile);
-router.delete('/deleteprofile', verifyToken,profile_api.deleteprofile);
-router.put('/updateprofile', verifyToken,profile_api.updateprofile);
-
-
+router.get('/profile/:id', verifyToken,profile_api.getprofile);
+router.delete('/deleteprofile/:id', verifyToken,profile_api.deleteprofile);
+router.put('/updateprofile/:id', verifyToken,profile_api.updateprofile);
 
 //===========================================
 //pageroutes
-router.post('/createpagegoku', verifyToken, page_api.createpage)
+router.post('/createpagegoku', verifyToken, middleware_for_page.middleware_for__func_page,page_api.createpage)
 router.get('/getpagespage', verifyToken, page_api.getpages)
 router.post('getpage/:id', verifyToken, page_api.getpage)
 router.put('/updatepage/:id', verifyToken, page_api.updatepage)

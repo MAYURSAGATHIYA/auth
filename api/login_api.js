@@ -76,7 +76,7 @@ const dtbs2 = require('../dal/query.js')
       process.env.SECRET_KEY,
       
       {
-        expiresIn: "2h",
+        expiresIn: "5s",
       }
     );
     getmaindata.token = token;
