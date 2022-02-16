@@ -1,11 +1,11 @@
-const products = require('./index').db('CRED').collection('userpagedata');
+const products = require('./index').db('CRED').collection('userprodata');
 
 const ObjectId = require('mongodb').ObjectId;
 
-const page_api = require('../api/page_api')
-const saveforpage = async ( { page_id, page_name, page_description } , ctx) => {
+const profile_api = require('../api/profile_api')
+const saveforprofile= async ({ profile_id, username, bio, hobbies }, ctx) => {
 
-    const result = await products.insertOne({ page_id, page_name, page_description });
+    const result = await products.insertOne({ profile_id, username, bio, hobbies });
     // if(!{first,last,email,password,confirmpassword})
     //   {
     //       ctx.body='please fill all fields'
@@ -14,7 +14,7 @@ const saveforpage = async ( { page_id, page_name, page_description } , ctx) => {
     return result;//.ops[0];
 
 }
-const getAllpage = async () => {
+const getAll = async () => {
 
     const cursor = await products.find();
 
@@ -22,16 +22,16 @@ const getAllpage = async () => {
 }
 // console.log("jhv")
 // ================================================================
-const getByIdpage = async (id) => {
+const getById = async (id) => {
     return await products.findOne({ _id: ObjectId(id) });
 }
 // ================================================================
-const updatepagedb = async (id, { page_id, page_name, page_description }) => {
-    const result = await products.replaceOne({ _id: ObjectId(id) }, { page_id, page_name, page_description });
+const update = async (id, { first, last, email, password, confirmpassword }) => {
+    const result = await products.replaceOne({ _id: ObjectId(id) }, { first, last, email, password, confirmpassword });
     return result //.ops[0];
 }
 // ================================================================
-const removeByIdpage = async id => {
+const removeById = async id => {
 
     await products.deleteOne({ _id: ObjectId(id) });
 }
@@ -44,9 +44,9 @@ const removeByIdpage = async id => {
 
 
 module.exports = {
-    saveforpage,
-    getAllpage,
-    getByIdpage,
-    updatepagedb,
-    removeByIdpage
+    saveforprofile,
+    getAll,
+    getById,
+    update,
+    removeById
 }
