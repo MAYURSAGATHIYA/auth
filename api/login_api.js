@@ -86,6 +86,7 @@ const dtbs2 = require('../dal/query.js')
         "message": "successfully logged in",
         "response": getmaindata}
       }
+    // ctx.redirect('/localhost:4000/profile');
       console.log("5")
   }
     module.exports={login}

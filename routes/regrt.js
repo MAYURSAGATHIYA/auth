@@ -6,7 +6,8 @@ const login_api = require('../api/login_api')
 const query = require('../dal/query')
 const koa = require('koa')
 const srvr = require('../server')
-const { likepost } = require('../api/like_api')
+const like_api=require('../api/like_api')
+
 const middleware_for_register = require('../middleware_for_register')
 const middleware_for_page=require('../middleware_for_page')
 const middleware_for_post=require('../middleware_for_post');
@@ -55,8 +56,8 @@ router.put('/updatepost/:id', verifyToken,middleware_for_post.middleware_for_fun
 router.delete('/deletepost/:id', verifyToken, post_api.delpost)
 
 //like 
-
-router.post('/likepost', likepost)
+const middleware_for_like=require('../midddleware_for_like.js')
+router.post('/likepost', middleware_for_like.demon,like_api.likepost)
 //comment
 
 
