@@ -40,20 +40,26 @@ const delpost = async (ctx) => {
    
     return
 }
-const uppost = async (ctx) => {
-    const { post_id, post_type, post_link}=ctx.request.body
-    const storing_in_var={ post_id, post_type, post_link}
-    const haw = await post_db.update(ctx.params.id, storing_in_var)
-    ctx.body = haw
-    ctx.status=200;
-    ctx.body="successfully updated "
-    return
 
+const updatepost =  (ctx) => {
+
+   
+    
+    
+    const { post_id, post_type, post_link}=ctx.request.body
+
+    const storing={ post_id, post_type, post_link}
+    
+    const haw =  post_db.update(ctx.params.id, storing)
+    ctx.status=200;
+    ctx.body = "successfully updated"
+    return
 }
+
 module.exports = {
     createpost,
     getposts,
     getpost,
     delpost,
-    uppost
+    updatepost
 }

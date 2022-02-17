@@ -15,7 +15,7 @@ const verifyToken = (ctx, next) => {
     console.log("2")
     if (!token1) {
         ctx.status = 403;
-        ctx.body = "token is required"
+        ctx.body = "PLEASE LOGIN!!!"
         return
 
     }

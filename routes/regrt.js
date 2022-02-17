@@ -29,12 +29,13 @@ router.get('/getallusers',pro_api.getpros)
 router.get('/getpro/:id', pro_api.getpro)
 router.delete('/delpro/:id', pro_api.delpro)
 router.put('/updateuser/:id', middleware_for_register.middleware,pro_api.uppro)
+
 //==========================================================
 // login
 router.post('/login',  login_api.login)
 //profile
 const profile_api=require('../api/profile_api')
-router.post('/profile', verifyToken,profile_api.createprofile);
+router.post('/createprofile', verifyToken,profile_api.createprofile);
 router.post('/getprofiles', verifyToken,profile_api.getprofiles);
 router.get('/profile/:id', verifyToken,profile_api.getprofile);
 router.delete('/deleteprofile/:id', verifyToken,profile_api.deleteprofile);
@@ -52,7 +53,7 @@ router.delete('/deletepage/:id', verifyToken, page_api.deletepage)
 router.post('/abea173781b2c3f6a850258d6dc1bf5ab5d4711b', verifyToken, middleware_for_post.middleware_for_func_post,post_api.createpost)
 router.get('/readposts', verifyToken, post_api.getposts)
 router.get('/readpost/:id', verifyToken, post_api.getpost)
-router.put('/updatepost/:id', verifyToken,middleware_for_post.middleware_for_func_post, post_api.uppost)
+router.put('/updatepost/:id', verifyToken,middleware_for_post.middleware_for_func_post, post_api.updatepost)
 router.delete('/deletepost/:id', verifyToken, post_api.delpost)
 
 //like 

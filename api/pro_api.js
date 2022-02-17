@@ -40,16 +40,20 @@ const delpro = async (ctx) => {
    
     return
 }
-const uppro = async (ctx) => {
+const uppro =(ctx) => {
     const {first, last, email, password, confirmpassword}=ctx.request.body
-    const storing_in_var={first, last, email, password, confirmpassword}
-    const haw = await query.update(ctx.params.id, storing_in_var)
-    ctx.body = haw
+    const yoyo={first, last, email, password, confirmpassword}
+    const koko =  query.update(ctx.params.id, yoyo)
+    console.log("1")
     ctx.status=200;
-    ctx.body="successfully updated "
+    ctx.body = "successfully updated"
     return
-
 }
+
+
+
+
+
 module.exports = {
     createpro,
     getpros,

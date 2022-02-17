@@ -46,11 +46,10 @@ const deletepage = async (ctx) => {
 
     return
 }
-const updatepage = async (ctx) => {
+const updatepage =  (ctx) => {
     const { page_id, page_name, page_description } = ctx.request.body
     const storing_in_var = { page_id, page_name, page_description }
-    const haw = await page_db.updatepagedb(ctx.params.id, storing_in_var)
-    ctx.body = haw
+    const haw =  page_db.updatepagedb(ctx.params.id, storing_in_var)
     ctx.status = 200;
     ctx.body = "page successfully updated "
     return

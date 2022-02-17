@@ -8,10 +8,7 @@ const ObjectId = require('mongodb').ObjectId;
 const save = async ({ post_id, post_type, post_link },ctx) => {
     
     const result = await products.insertOne({ post_id, post_type, post_link });
-    // if(!{first,last,email,password,confirmpassword})
-    //   {
-    //       ctx.body='please fill all fields'
-    //     }
+    
     
     return result;//.ops[0];
     
@@ -31,7 +28,10 @@ const getById = async (id) => {
 // ================================================================
 const update = async (id, { post_id, post_type, post_link }) => {
     const result = await products.replaceOne({ _id: ObjectId(id) }, { post_id, post_type, post_link });
-    return result //.ops[0];
+    
+    return result
+
+    
 }
 // ================================================================
 const removeById = async id => {

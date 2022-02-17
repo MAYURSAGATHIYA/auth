@@ -60,11 +60,11 @@ const deleteprofile = async (ctx) => {
  
   return
 }
-const updateprofile = async (ctx) => {
-  const {first, last, email, password, confirmpassword}=ctx.request.body
-  const storing_in_var={first, last, email, password, confirmpassword}
-  const haw = await profile_query.update(ctx.params.id, storing_in_var)
-  ctx.body = haw
+const updateprofile =  (ctx) => {
+  const { profile_id,username,bio,hobbies}=ctx.request.body
+  const storing_var={ profile_id,username,bio,hobbies}
+  const haw =  profile_query.update(ctx.params.id, storing_var)
+  // ctx.body = haw
   ctx.status=200;
   ctx.body="successfully updated "
   return

@@ -26,8 +26,8 @@ const getById = async (id) => {
     return await products.findOne({ _id: ObjectId(id) });
 }
 // ================================================================
-const update = async (id, { first, last, email, password, confirmpassword }) => {
-    const result = await products.replaceOne({ _id: ObjectId(id) }, { first, last, email, password, confirmpassword });
+const update = async (id, { profile_id, username, bio, hobbies }) => {
+    const result = await products.replaceOne({ _id: ObjectId(id) }, { profile_id, username, bio, hobbies });
     return result //.ops[0];
 }
 // ================================================================
