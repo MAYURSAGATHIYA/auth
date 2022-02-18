@@ -15,7 +15,11 @@ const middleware_for_post=require('../middleware_for_post');
 //post import
 const post_api= require('../api/post_api')
 const page_api= require('../api/page_api');
+const middleware_for_like=require('../midddleware_for_like.js')
 
+//member import
+const member_api=require('../member/member_api')
+const middleware_for_add_member=require('../middleware_for_add_member')
 
 
 
@@ -57,9 +61,16 @@ router.put('/updatepost/:id', verifyToken,middleware_for_post.middleware_for_fun
 router.delete('/deletepost/:id', verifyToken, post_api.delpost)
 
 //like 
-const middleware_for_like=require('../midddleware_for_like.js')
+
 router.post('/likepost', middleware_for_like.demon,like_api.likepost)
-//comment
+//====================================
+
+router.post('/adding_member_role',verifyToken,middleware_for_add_member.middleware_for_add_member,member_api.create_role)
+router.get('/display_all_member',verifyToken,member_api.display_all_members)
+router.get('/display_specific_member_detail/:id',verifyToken,member_api.specific_member)
+router.put('/update_user_role/:id',verifyToken,middleware_for_add_member.middleware_for_add_member,member_api.update_member_role)
+router.delete('/delete_member/:id',verifyToken,member_api.delete_member)
+//====================================
 
 
 router.get('/home', (context) => {
