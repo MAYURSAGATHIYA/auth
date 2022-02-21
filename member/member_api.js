@@ -5,8 +5,8 @@ const member_db  = require('../dal/member_db')
 const create_role = (ctx) => {
     const random_unique_id_for_invite_role = uuidv4()
 
-    const {  admin, manager } = ctx.request.body
-    const member_fields = { random_unique_id_for_invite_role,  admin, manager }
+    const {  role } = ctx.request.body
+    const member_fields = { random_unique_id_for_invite_role,  role }
 
     ctx.status = 200
     ctx.body = member_fields
@@ -29,15 +29,14 @@ const specific_member = async (ctx) => {
 
 }
 
-
 const update_member_role =(ctx) => {
     const random_unique_id_for_invite_role = uuidv4()
-    const {admin, manager}=ctx.request.body
-    const yoyo={random_unique_id_for_invite_role,admin, manager}
+    const {role}=ctx.request.body
+    const yoyo={random_unique_id_for_invite_role,role}
     const koko =  member_db.update_member_role_func_db(ctx.params.id, yoyo)
     
-    ctx.status=200;
-    ctx.body = "successfully updated"
+    // ctx.status=200;
+    // ctx.body = "successfully updated"
     return
 }
 
@@ -50,5 +49,6 @@ const delete_member = async (ctx) => {
    
     return
 }
+
 
 module.exports = { create_role,display_all_members,specific_member,update_member_role,delete_member }
