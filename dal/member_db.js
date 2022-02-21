@@ -38,25 +38,25 @@ const removeByIdfunc = async id => {
 
 
 
-const update_member_role_func_db = async (ctx,id,role) => {
+const update_member_role_func_db = async (id,role) => p1.updateOne({_id: ObjectId(id)},{$set:{role}})
+// {
 
 
-    console.log("dell8")
+//     // console.log("dell8")
 
-    const a1= {_id: ObjectId(id)}
-    console.log("dell9")
+//     const a1= {_id: ObjectId(id)}
+//     // console.log("dell9")
 
-    const a2= {$set:{role}}  
-    console.log("dell10")
+//     const a2= {$set:{role}}  
+//     // console.log("dell10")
  
-    const result = await p1.updateOne(a1,a2)
-    console.log("dell11")
+//     const result = await p1.updateOne(a1,a2)
+//     // console.log("dell11")
+//     // console.log(result,"data coming here")
 
-module.exports={expovars:result}
-
-      return
-   
-}   
+//     // module.exports={expovars:result}
+    
+// }   
 
 module.exports = { saving_role_details, getAllfunc, getByIdfunc, update_member_role_func_db, removeByIdfunc}
 

@@ -29,24 +29,29 @@ const specific_member = async (ctx) => {
 
 }
 
-const update_member_role = (ctx,next) => {
+const update_member_role =  (ctx) => {
   console.log("dell1")
     const random_unique_id_for_invite_role = uuidv4()
-    console.log("dell2")
+    // console.log("dell2")
     const { role } = ctx.request.body
-    console.log("dell3")
+    // console.log("dell3")
+    console.log(role)
     const yoyo = { random_unique_id_for_invite_role, role }
-    console.log("dell4")
-    const koko = member_db.update_member_role_func_db(ctx, ctx.params.id, role)
-    console.log("dell5")
-    const {expovars}=require('../dal/member_db')
-    console.log("dell6")
+    console.log({random_unique_id_for_invite_role, role})
+    // console.log("dell4")
+    const koko =  member_db.update_member_role_func_db( ctx.params.id, role)
+    console.log({koko})
+    // console.log("dell5")
+    
+   
+        // ctx.body="succesfully modified" 
+    // console.log("dell7")
+    // console.log(expovars)   
+    // const {expovars}=require('../dal/member_db')
     ctx.status = 200;
-    ctx.body=expovars
-    console.log("dell7")
-    // ctx.body="succesfully modified"  
-
-    return next()
+    ctx.body= {koko}
+    // ctx.body={"response":{expovars}}
+//   return
 
 }
 

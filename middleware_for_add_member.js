@@ -1,8 +1,8 @@
 
 
-const middleware_for_add_member = (ctx, next) => {
+const middleware_for_add_member = (ctx,next) => {
 
-
+  console.log('inside midd');
   const {
       role
   } = ctx.request.body
@@ -13,7 +13,7 @@ const middleware_for_add_member = (ctx, next) => {
 
   }
 
-next();
+ return next();
 }
 
 module.exports = { middleware_for_add_member }
