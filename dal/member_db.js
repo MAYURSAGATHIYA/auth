@@ -38,41 +38,25 @@ const removeByIdfunc = async id => {
 
 
 
-const update_member_role_func_db = async (role,ctx,id) => {
+const update_member_role_func_db = async (ctx,id,role) => {
 
-    // const {role}=ctx.request.body
+
+    console.log("dell8")
+
     const a1= {_id: ObjectId(id)}
-    const a2= {$set:{role}}
+    console.log("dell9")
 
+    const a2= {$set:{role}}  
+    console.log("dell10")
+ 
     const result = await p1.updateOne(a1,a2)
-    const result2 = await p1.findOne(a1).toArray()
-    console.log(result,"update query")
-    console.log(result2,"update2 query")
+    console.log("dell11")
 
-    ctx.status=200;
-    ctx.body = "successfully updated"   
-    return result
-    
+module.exports={expovars:result}
 
-}
+      return
+   
+}   
 
+module.exports = { saving_role_details, getAllfunc, getByIdfunc, update_member_role_func_db, removeByIdfunc}
 
-module.exports = { saving_role_details, getAllfunc, getByIdfunc, update_member_role_func_db, removeByIdfunc }
-
-
-// const update_member_role_func_db = async (_id,ctx) => {
-
-//     const{role}=ctx.request.body
-
-//     const result = await p1.updateOne({ _id }, {
-//         $set: {
-            
-//         }
-//     })
-//     console.log(result,"update query")
-//     ctx.status=200;
-//     ctx.body = "successfully updated"   
-//     return result
-    
-
-// }

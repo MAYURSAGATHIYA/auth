@@ -71,6 +71,7 @@ router.get('/display_specific_member_detail/:id',verifyToken,member_api.specific
 router.put('/update_user_role/:id',verifyToken,middleware_for_add_member.middleware_for_add_member,member_api.update_member_role)
 router.delete('/delete_member/:id',verifyToken,member_api.delete_member)
 //====================================
+// router.put('/update_user_role/:id',member_api.update_member_role)
 
 
 router.get('/home', (context) => {

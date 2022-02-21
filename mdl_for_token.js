@@ -7,12 +7,12 @@ const secret_key=process.env.SECRET_KEY
 
 const verifyToken = (ctx, next) => {
 
-    console.log("1")
+    // console.log("1")
     const token1 = ctx.request.header["authorization"];
-    console.log(token1)
+    // console.log(token1)
 
     // console.log({header: ctx.request.header})
-    console.log("2")
+    // console.log("2")
     if (!token1) {
         ctx.status = 403;
         ctx.body = "PLEASE LOGIN!!!"
@@ -76,7 +76,7 @@ const verifyToken = (ctx, next) => {
     //     return
     // }
     //=========================
-    console.log("6")
+    // console.log("6")
     return next();
 
 }
