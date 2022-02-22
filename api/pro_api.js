@@ -44,7 +44,7 @@ const uppro =(ctx) => {
     const {first, last, email, password, confirmpassword}=ctx.request.body
     const yoyo={first, last, email, password, confirmpassword}
     const koko =  query.update(ctx.params.id, yoyo)
-    console.log("1")
+    // console.log("1")
     ctx.status=200;
     ctx.body = "successfully updated"
     return

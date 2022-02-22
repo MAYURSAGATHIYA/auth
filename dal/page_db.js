@@ -26,10 +26,13 @@ const getByIdpage = async (id) => {
     return await products.findOne({ _id: ObjectId(id) });
 }
 // ================================================================
-const updatepagedb = async (id, { page_id, page_name, page_description }) => {
-    const result = await products.replaceOne({ _id: ObjectId(id) }, { page_id, page_name, page_description });
-    return result //.ops[0];
-}
+// const updatepagedb = async (id, { page_id, page_name, page_description }) => {
+//     const result = await products.replaceOne({ _id: ObjectId(id) }, { page_id, page_name, page_description });
+//     return result //.ops[0];
+// }
+
+const updatepagedb = async (id, { page_id, page_name, page_description }) => products.updateOne({_id: ObjectId(id)},{$set: { page_id, page_name, page_description }})
+ 
 // ================================================================
 const removeByIdpage = async id => {
 

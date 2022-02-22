@@ -26,10 +26,12 @@ const getById = async (id) => {
     return await products.findOne({ _id: ObjectId(id) });
 }
 // ================================================================
-const update = async (id, { profile_id, username, bio, hobbies }) => {
-    const result = await products.replaceOne({ _id: ObjectId(id) }, { profile_id, username, bio, hobbies });
-    return result //.ops[0];
-}
+// const update = async (id, { profile_id, username, bio, hobbies }) => {
+//     const result = await products.replaceOne({ _id: ObjectId(id) }, { profile_id, username, bio, hobbies });
+//     return result //.ops[0];
+// }
+const update = async (id,{ profile_id, username, bio, hobbies }) => products.updateOne({_id: ObjectId(id)},{$set:{ profile_id, username, bio, hobbies }})
+ 
 // ================================================================
 const removeById = async id => {
 

@@ -1,3 +1,4 @@
+// import {update_member_role_func_db} from '../dal/member_db'
 const { v4: uuidv4 } = require('uuid')
 const member_db = require('../dal/member_db')
 
@@ -29,30 +30,16 @@ const specific_member = async (ctx) => {
 
 }
 
-const update_member_role =  (ctx) => {
-  console.log("dell1")
-    const random_unique_id_for_invite_role = uuidv4()
-    // console.log("dell2")
-    const { role } = ctx.request.body
-    // console.log("dell3")
-    console.log(role)
-    const yoyo = { random_unique_id_for_invite_role, role }
-    console.log({random_unique_id_for_invite_role, role})
-    // console.log("dell4")
-    const koko =  member_db.update_member_role_func_db( ctx.params.id, role)
-    console.log({koko})
-    // console.log("dell5")
-    
-   
-        // ctx.body="succesfully modified" 
-    // console.log("dell7")
-    // console.log(expovars)   
-    // const {expovars}=require('../dal/member_db')
-    ctx.status = 200;
-    ctx.body= {koko}
-    // ctx.body={"response":{expovars}}
-//   return
+ const update_member_role =async (ctx) => {
 
+    const random_unique_id_for_invite_role = uuidv4()
+    const { role } = ctx.request.body
+    const yoyo = { random_unique_id_for_invite_role, role }
+    const koko =await member_db.update_member_role_func_db( ctx.params.id, role)
+   
+    ctx.status = 200;
+    ctx.body= {"response":"your data has been modified"}
+   return 
 }
 
 const delete_member = async (ctx) => {
@@ -66,4 +53,4 @@ const delete_member = async (ctx) => {
 }
 
 
-module.exports = { create_role, display_all_members, specific_member, update_member_role, delete_member}
+module.exports= { create_role, display_all_members, specific_member, update_member_role, delete_member}

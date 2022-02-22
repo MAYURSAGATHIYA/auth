@@ -1,3 +1,5 @@
+
+
 const verifyToken = require('../mdl_for_token.js')
 const koaRouter = require('koa-router')
 const router = new koaRouter()
@@ -24,7 +26,6 @@ const middleware_for_add_member=require('../middleware_for_add_member')
 
 
 
-
 //=========================
 
 //==========================================================
@@ -41,15 +42,15 @@ router.post('/login',  login_api.login)
 const profile_api=require('../api/profile_api')
 router.post('/createprofile', verifyToken,profile_api.createprofile);
 router.post('/getprofiles', verifyToken,profile_api.getprofiles);
-router.get('/profile/:id', verifyToken,profile_api.getprofile);
+router.post('/profile/:id', verifyToken,profile_api.getprofile);
 router.delete('/deleteprofile/:id', verifyToken,profile_api.deleteprofile);
 router.put('/updateprofile/:id', verifyToken,profile_api.updateprofile);
 
 //===========================================
 //pageroutes
 router.post('/createpagegoku', verifyToken, middleware_for_page.middleware_for__func_page,page_api.createpage)
-router.get('/getpagespage', verifyToken, page_api.getpages)
-router.post('getpage/:id', verifyToken, page_api.getpage)
+router.post('/getpagespage', verifyToken, page_api.getpages)
+router.get('/getpage/:id', verifyToken, page_api.getpage)
 router.put('/updatepage/:id', verifyToken, middleware_for_page.middleware_for__func_page, page_api.updatepage)
 router.delete('/deletepage/:id', verifyToken, page_api.deletepage)
 //===========================================
@@ -64,7 +65,6 @@ router.delete('/deletepost/:id', verifyToken, post_api.delpost)
 
 router.post('/likepost', middleware_for_like.demon,like_api.likepost)
 //====================================
-
 router.post('/adding_member_role',verifyToken,middleware_for_add_member.middleware_for_add_member,member_api.create_role)
 router.get('/display_all_member',verifyToken,member_api.display_all_members)
 router.get('/display_specific_member_detail/:id',verifyToken,member_api.specific_member)
@@ -78,3 +78,6 @@ router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
 module.exports = router;
+
+
+

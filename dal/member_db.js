@@ -25,10 +25,7 @@ const getByIdfunc = (id) => {
 }
 
 
-// const update_member_role_func_db =  (id, { random_unique_id_for_invite_role,role }) => {
-//     const result =  p1.replaceOne({ _id: ObjectId(id) }, { random_unique_id_for_invite_role,role });
-//     return result //.ops[0];
-// }
+
 
 const removeByIdfunc = async id => {
 
@@ -37,26 +34,7 @@ const removeByIdfunc = async id => {
 
 
 
-
-const update_member_role_func_db = async (id,role) => p1.updateOne({_id: ObjectId(id)},{$set:{role}})
-// {
-
-
-//     // console.log("dell8")
-
-//     const a1= {_id: ObjectId(id)}
-//     // console.log("dell9")
-
-//     const a2= {$set:{role}}  
-//     // console.log("dell10")
+ const update_member_role_func_db = async (id,role) => p1.updateOne({_id: ObjectId(id)},{$set:{role}})
  
-//     const result = await p1.updateOne(a1,a2)
-//     // console.log("dell11")
-//     // console.log(result,"data coming here")
 
-//     // module.exports={expovars:result}
-    
-// }   
-
-module.exports = { saving_role_details, getAllfunc, getByIdfunc, update_member_role_func_db, removeByIdfunc}
-
+module.exports ={ saving_role_details, getAllfunc, getByIdfunc, update_member_role_func_db, removeByIdfunc}
