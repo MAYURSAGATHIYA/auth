@@ -76,7 +76,7 @@ const dtbs2 = require('../dal/query.js')
       process.env.SECRET_KEY,
       
       {
-        expiresIn: "5s",
+        expiresIn: "50h",
       }
     );
     getmaindata.token = token;
@@ -85,6 +85,10 @@ const dtbs2 = require('../dal/query.js')
       ctx.body = {
         "message": "successfully logged in",
         "response": getmaindata}
+      }
+      else {
+        ctx.status=403;
+        ctx.body={msg:"please enter valid id and password"}
       }
     // ctx.redirect('/localhost:4000/profile');
       console.log("5")

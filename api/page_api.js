@@ -8,10 +8,10 @@ const page_db = require('../dal/page_db')
 const createpage = async (ctx) => {
 
 
-    const { page_id, page_name, page_description } = ctx.request.body;
+    const { page_id, page_name,email, page_description } = ctx.request.body;
 
 
-    const pagedata = { page_id, page_name, page_description }
+    const pagedata = { page_id, page_name,email, page_description }
 
     ctx.body = {
         msg: "WELCOME TO PAGE",
@@ -47,8 +47,8 @@ const deletepage = async (ctx) => {
     return
 }
 const updatepage =  (ctx) => {
-    const { page_id, page_name, page_description } = ctx.request.body
-    const storing_in_var = { page_id, page_name, page_description }
+    const { page_id, page_name,email, page_description } = ctx.request.body
+    const storing_in_var = { page_id, page_name,email, page_description }
     const haw =  page_db.updatepagedb(ctx.params.id, storing_in_var)
     ctx.status = 200;
     ctx.body = "page successfully updated "

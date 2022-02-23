@@ -5,11 +5,11 @@ const products = require('./index').db('CRED').collection('user');
 const ObjectId = require('mongodb').ObjectId;
 
 // ================================================================
-const save = async ({ first, last, email, password, confirmpassword },ctx) => {
+const save = async ({ first, last, email, password, confirmpassword }) => {
     
     const result = await products.insertOne({ first, last, email, password, confirmpassword });
    
-    console.log(result,"result")
+    // console.log(result,"result")
     
     return result;
     

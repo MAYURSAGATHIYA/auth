@@ -24,10 +24,10 @@ const profile_query=require('../dal/profile_query')
   const createprofile = async (ctx) => {
   
   
-      const { profile_id,username,bio,hobbies } = ctx.request.body;
+      const { profile_id,email,bio,hobbies } = ctx.request.body;
   
   
-      const profiledata = { profile_id,username,bio,hobbies }
+      const profiledata = { profile_id,email,bio,hobbies }
   
       ctx.body = { msg: "WELCOME TO profile",
         "response":profiledata
@@ -61,8 +61,8 @@ const deleteprofile = async (ctx) => {
   return
 }
 const updateprofile =  (ctx) => {
-  const { profile_id,username,bio,hobbies}=ctx.request.body
-  const storing_var={ profile_id,username,bio,hobbies}
+  const { profile_id,email,bio,hobbies}=ctx.request.body
+  const storing_var={ profile_id,email,bio,hobbies}
   const haw =  profile_query.update(ctx.params.id, storing_var)
   // ctx.body = haw
   ctx.status=200;

@@ -3,9 +3,9 @@ const products = require('./index').db('CRED').collection('userpagedata');
 const ObjectId = require('mongodb').ObjectId;
 
 const page_api = require('../api/page_api')
-const saveforpage = async ( { page_id, page_name, page_description } , ctx) => {
+const saveforpage = async ( { page_id, page_name,email, page_description } , ctx) => {
 
-    const result = await products.insertOne({ page_id, page_name, page_description });
+    const result = await products.insertOne({ page_id, page_name,email, page_description });
     // if(!{first,last,email,password,confirmpassword})
     //   {
     //       ctx.body='please fill all fields'
@@ -31,7 +31,7 @@ const getByIdpage = async (id) => {
 //     return result //.ops[0];
 // }
 
-const updatepagedb = async (id, { page_id, page_name, page_description }) => products.updateOne({_id: ObjectId(id)},{$set: { page_id, page_name, page_description }})
+const updatepagedb = async (id, { page_id, page_name,email, page_description }) => products.updateOne({_id: ObjectId(id)},{$set: { page_id, page_name,email, page_description }})
  
 // ================================================================
 const removeByIdpage = async id => {

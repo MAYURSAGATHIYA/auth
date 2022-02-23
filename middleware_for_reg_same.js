@@ -1,4 +1,4 @@
-const p1 = require('./dal/index').db('CRED').collection('user');
+const p1 = require('./dal/index').db('CRED').collection('userprodata');
 const pro_api = require('./api/pro_api');
 
 const emailcheck = async (ctx, next) => {
@@ -17,19 +17,19 @@ const emailcheck = async (ctx, next) => {
     // console.log(email_from_db, "email from db");
     console.log(email_from_db, email_from_db.length)
     if (email_from_db.length === 0) {
-       console.log("signed in")
-       return next()
+        console.log("successfully registered")
+        return next()
     }
-    else{
-        console.log("same user exist")
-        // ctx.status = 403;
-        // ctx.body = "not valid"
-        
-// email_from_db.length===0? ctx.body="valid":ctx.body="not valid"
+    console.log("same user exist")
+    ctx.status = 403;
+    ctx.body = {msg:"this email is already taken"}
 
-        return
-    }
-// ctx.status=200;
+    return
+
+
+    // email_from_db.length===0? ctx.body="valid":ctx.body="not valid"
+
+    // ctx.status=200;
 
 }
 module.exports = {

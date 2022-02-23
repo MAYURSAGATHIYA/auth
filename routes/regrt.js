@@ -34,23 +34,23 @@ router.post('/registration', middleware_for_register.middleware,middleware_for_s
 router.get('/getallusers',pro_api.getpros)
 router.get('/getpro/:id', pro_api.getpro)
 router.delete('/delpro/:id', pro_api.delpro)
-router.put('/updateuser/:id', middleware_for_register.middleware,pro_api.uppro)
+router.put('/updateuser/:id', middleware_for_register.middleware,middleware_for_same_user.emailcheck,pro_api.uppro)
 
 //==========================================================
 // login
 router.post('/login',  login_api.login)
 //profile
 const profile_api=require('../api/profile_api')
-router.post('/createprofile', verifyToken,profile_api.createprofile);
-router.post('/getprofiles', verifyToken,profile_api.getprofiles);
-router.post('/profile/:id', verifyToken,profile_api.getprofile);
+router.post('/createprofile', verifyToken,midddleware_for_profile.middleware_for__func_profile,profile_api.createprofile);
+router.get('/getprofiles', verifyToken,profile_api.getprofiles);
+router.get('/profile/:id', verifyToken,profile_api.getprofile);
 router.delete('/deleteprofile/:id', verifyToken,profile_api.deleteprofile);
-router.put('/updateprofile/:id', verifyToken,profile_api.updateprofile);
+router.put('/updateprofile/:id', verifyToken,midddleware_for_profile.middleware_for__func_profile,profile_api.updateprofile);
 
 //===========================================
 //pageroutes
 router.post('/createpagegoku', verifyToken, middleware_for_page.middleware_for__func_page,page_api.createpage)
-router.post('/getpagespage', verifyToken, page_api.getpages)
+router.get('/getpagespage', verifyToken, page_api.getpages)
 router.get('/getpage/:id', verifyToken, page_api.getpage)
 router.put('/updatepage/:id', verifyToken, middleware_for_page.middleware_for__func_page, page_api.updatepage)
 router.delete('/deletepage/:id', verifyToken, page_api.deletepage)

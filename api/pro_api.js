@@ -13,7 +13,7 @@ const createpro = async (ctx) => {
     ctx.status=200;
     ctx.body = { msg: "WELCOME TO OUR SITE YOU'VE REGISTERED SUCCESSFULLY" }
      await query.save(userdata);
-
+// console.log(userdata)
 
 }
 
@@ -23,7 +23,6 @@ const getpros = async (ctx) => {
     ctx.body = j
     return
 }
-
 const getpro = async (ctx) => {
     // console.log(ctx.params.id)
     const gok = await query.getById(ctx.params.id);

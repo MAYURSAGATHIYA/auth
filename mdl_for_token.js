@@ -80,3 +80,115 @@ const verifyToken = (ctx, next) => {
 }
 
 module.exports = verifyToken
+
+
+//===================
+// const jwt = require("jsonwebtoken");
+// const dotenv=require('dotenv').config()
+
+// // const OktaJwtVerifier = require('@okta/jwt-verifier');
+
+// // const { setInternalBufferSize } = require("bson");
+// // const config = process.env;
+
+// // const secret_key=process.env.SECRET_KEY
+// // const q = "aaaa"
+
+// const verifyToken = (ctx, next) => {
+
+    
+//     const token = ctx.request.header["authorization"];
+    
+
+//     if (!token) {
+//         ctx.status = 403;
+//         ctx.body = "PLEASE LOGIN!!!"
+//         return
+
+//     }
+//     else if (token) {
+//       // console.log(token)
+//       const bearer = token.split(' '); //malformed
+//       const bearerToken = bearer[1];
+//       ctx.token = bearerToken;
+      
+//       if(token==bearerToken){
+//         console.log("tokens are samed ")
+//       }
+// // console.log(bearerToken,"bearer token console")
+      
+// //      const decoding_var= jwt.verify(ctx.token,'aaaa')
+// // console.log(decoding_var,"this is decoding var")
+// //       return decoding_var;
+    
+      
+//     } else {
+        
+//         ctx.status=403;
+//         ctx.throw="not valid"
+//         return
+//       }
+    
+
+// //========
+
+
+
+
+
+    
+
+
+    
+
+// }
+
+// module.exports = verifyToken
+
+
+
+// // const jwt = require("jsonwebtoken");
+// // const OktaJwtVerifier = require('@okta/jwt-verifier');
+// // // const config = process.env;
+
+// // const secret_key=process.env.SECRET_KEY
+// // // const q = "aaaa"
+
+// // const verifyToken = (ctx, next) => {
+
+    
+// //     const token1 = ctx.request.header["authorization"];
+    
+
+// //     if (!token1) {
+// //         ctx.status = 403;
+// //         ctx.body = "PLEASE LOGIN!!!"
+// //         return
+
+// //     }
+//     // if (token) {
+//     //     const bearer = token1.split(' '); //malformed
+//     //     const bearerToken = bearer[1];
+//     //     ctx.token = bearerToken;
+        
+        
+//     //     jwt.verify(ctx.token,process.env.SECRET_KEY)=(err,data)=>{
+
+//     //       if(err){
+//     //         ctx.status=403;
+//     //         ctx.body={msg:"not valid token"}
+//     //       }
+//     //       else{
+//     //         data:data
+//     //           // ctx.status=200;
+//     //           // return next()
+//     //       }
+//     //     }
+        
+//     //   } 
+        
+// //         ctx.status=403;
+// //         ctx.throw="not valid"
+// //         return
+// //       }
+    

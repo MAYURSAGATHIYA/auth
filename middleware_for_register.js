@@ -12,7 +12,7 @@ const middleware = (ctx, next) => {
       if (!(first && last && email && password && confirmpassword)) {
         const registration_details = { first, last, email, password, confirmpassword }
         const fieldKeys = Object.keys(registration_details)
-        const a = fieldKeys.map(key => !registration_details[key] ? key : 'THIS FIELD INSERTED PROPER')
+        const a = fieldKeys.map(key => !registration_details[key] ? key :"" )
         ctx.status=403;
         ctx.body={
           msg: "true",
@@ -23,11 +23,13 @@ const middleware = (ctx, next) => {
       }
     }
     else if (password !== confirmpassword) {
-      ctx.throw('password is different please enter same password', 403)
+      ctx.status=403;
+      ctx.body={message:"password should be the same"}
+      return
     }
-    next();
+   
     console.log("vldt")
-  
+    return next();
   }
   
 
