@@ -74,14 +74,14 @@ router.delete('/delete_member/:id',verifyToken,member_api.delete_member)
 //====================================
 //
 // tm register api
-
+const rst_api=require('../api/resetpwd_api')
 router.post('/tm_regiter',verifyToken,midddleware_for_team_api.middleware_for__team_reg)
 
 //===================================
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
+const resetpwd_middleware=require('../middleware_for_reset_pwd')
+
+router.post('/rpwd/:id',resetpwd_middleware.middleware_for_restpwd,rst_api.rstpwd)
 module.exports = router;
-
-
-
