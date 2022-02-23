@@ -1,5 +1,5 @@
 
-
+const middleware_for_same_user=require('../middleware_for_reg_same')
 const verifyToken = require('../mdl_for_token.js')
 const koaRouter = require('koa-router')
 const router = new koaRouter()
@@ -23,13 +23,14 @@ const middleware_for_like=require('../midddleware_for_like.js')
 const member_api=require('../member/member_api')
 const middleware_for_add_member=require('../middleware_for_add_member')
 
+const midddleware_for_team_api=require('../middleware_for_team_api')
 
 
 
 //=========================
 
 //==========================================================
-router.post('/registration', middleware_for_register.middleware, pro_api.createpro)
+router.post('/registration', middleware_for_register.middleware,middleware_for_same_user.emailcheck ,pro_api.createpro)
 router.get('/getallusers',pro_api.getpros)
 router.get('/getpro/:id', pro_api.getpro)
 router.delete('/delpro/:id', pro_api.delpro)
@@ -65,15 +66,18 @@ router.delete('/deletepost/:id', verifyToken, post_api.delpost)
 
 router.post('/likepost', middleware_for_like.demon,like_api.likepost)
 //====================================
-router.post('/adding_member_role',verifyToken,midddleware_for_profile.middleware_for__func_profile,middleware_for_add_member.middleware_for_add_member,member_api.create_role)
+router.post('/adding_member_role',verifyToken,middleware_for_add_member.middleware_for_add_member,member_api.create_role)
 router.get('/display_all_member',verifyToken,member_api.display_all_members)
 router.get('/display_specific_member_detail/:id',verifyToken,member_api.specific_member)
 router.put('/update_user_role/:id',verifyToken,middleware_for_add_member.middleware_for_add_member,member_api.update_member_role)
 router.delete('/delete_member/:id',verifyToken,member_api.delete_member)
 //====================================
-// router.put('/update_user_role/:id',member_api.update_member_role)
+//
+// tm register api
 
+router.post('/tm_regiter',verifyToken,midddleware_for_team_api.middleware_for__team_reg)
 
+//===================================
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })

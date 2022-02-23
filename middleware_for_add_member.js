@@ -4,7 +4,7 @@ const middleware_for_add_member = (ctx,next) => {
 
   console.log('inside midd');
   const {
-      role
+      role,owner_name
   } = ctx.request.body
   if (!(role === 'admin' ||  role === 'manager')) {
       ctx.status = 401;
@@ -12,8 +12,14 @@ const middleware_for_add_member = (ctx,next) => {
       return
 
   }
+if(!(owner_name)){
+    ctx.status = 401;
+      ctx.body = "pls enter owner name"   
+      return
+  }
 
- return next();
+ return next()
+ 
 }
 
 module.exports = { middleware_for_add_member }

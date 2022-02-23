@@ -8,12 +8,10 @@ const ObjectId = require('mongodb').ObjectId;
 const save = async ({ first, last, email, password, confirmpassword },ctx) => {
     
     const result = await products.insertOne({ first, last, email, password, confirmpassword });
-    // if(!{first,last,email,password,confirmpassword})
-    //   {
-    //       ctx.body='please fill all fields'
-    //     }
+   
+    console.log(result,"result")
     
-    return result;//.ops[0];
+    return result;
     
 }
 // ================================================================

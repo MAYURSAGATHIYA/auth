@@ -3,16 +3,17 @@ const query = require('../dal/query');
 // const {first,last,email,password,confirmpassword}=require('../routes/regrt')
 
 const createpro = async (ctx) => {
-
+// console.log("working api")
 
     const { first, last, email, password, confirmpassword } = ctx.request.body;
 
 
     const userdata = { first, last, email, password, confirmpassword }
-
+// console.log(userdata)
+    ctx.status=200;
     ctx.body = { msg: "WELCOME TO OUR SITE YOU'VE REGISTERED SUCCESSFULLY" }
-    return await query.save(userdata);
-    // console.log("syccessfukky registred")
+     await query.save(userdata);
+
 
 }
 

@@ -6,8 +6,8 @@ const member_db = require('../dal/member_db')
 const create_role = (ctx) => {
     const random_unique_id_for_invite_role = uuidv4()
 
-    const { role } = ctx.request.body
-    const member_fields = { random_unique_id_for_invite_role, role }
+    const { role,owner_name } = ctx.request.body
+    const member_fields = { random_unique_id_for_invite_role, role,owner_name }
 
     ctx.status = 200
     ctx.body = member_fields
@@ -20,8 +20,10 @@ const create_role = (ctx) => {
 const display_all_members = async (ctx) => {
     const j = await member_db.getAllfunc();
     ctx.body = j
+   
     return
 }
+
 
 const specific_member = async (ctx) => {
     const gok = await member_db.getByIdfunc(ctx.params.id);
@@ -34,8 +36,8 @@ const specific_member = async (ctx) => {
 
     const random_unique_id_for_invite_role = uuidv4()
     const { role } = ctx.request.body
-    const yoyo = { random_unique_id_for_invite_role, role }
-    const koko =await member_db.update_member_role_func_db( ctx.params.id, role)
+    const yoyo = { random_unique_id_for_invite_role, role ,owner_name}
+    const koko =await member_db.update_member_role_func_db( ctx.params.id, role,owner_name)
    
     ctx.status = 200;
     ctx.body= {"response":"your data has been modified"}
