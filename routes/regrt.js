@@ -24,6 +24,7 @@ const member_api=require('../member/member_api')
 const middleware_for_add_member=require('../middleware_for_add_member')
 
 const midddleware_for_team_api=require('../middleware_for_team_api')
+const resetpwd_middleware=require('../middleware_for_reset_pwd')
 
 
 
@@ -81,7 +82,6 @@ router.post('/tm_regiter',verifyToken,midddleware_for_team_api.middleware_for__t
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
-const resetpwd_middleware=require('../middleware_for_reset_pwd')
 
 router.post('/rpwd/:id',resetpwd_middleware.middleware_for_restpwd,rst_api.rstpwd)
 module.exports = router;

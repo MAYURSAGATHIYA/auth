@@ -1,15 +1,16 @@
 const jwt = require("jsonwebtoken");
 const OktaJwtVerifier = require('@okta/jwt-verifier');
 // const config = process.env;
+const dotenv=require('dotenv').config()
 
 const secret_key=process.env.SECRET_KEY
 // const q = "aaaa"
+console.log(secret_key)
 
 const verifyToken = (ctx, next) => {
 
     
     const token1 = ctx.request.header["authorization"];
-    
 
     if (!token1) {
         ctx.status = 403;
@@ -21,7 +22,11 @@ const verifyToken = (ctx, next) => {
         const bearer = token1.split(' '); //malformed
         const bearerToken = bearer[1];
         ctx.token = bearerToken;
-        
+    console.log(bearerToken)
+
+                const decoded = jwt.verify(bearerToken,secret_key)   
+                console.log(decoded) 
+
       } else {
         
         ctx.status=403;
@@ -65,7 +70,6 @@ const verifyToken = (ctx, next) => {
     // try{
     //     console.log("5")
     //     // console.log(token)
-    //     const decoded = jwt.verify(token,SECRET_KEY)    
     //     console.log(decoded,"decoded")
 
     // }catch(err){
