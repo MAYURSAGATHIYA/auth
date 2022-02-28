@@ -82,6 +82,6 @@ router.post('/tm_regiter',verifyToken,midddleware_for_team_api.middleware_for__t
 router.get('/home', (context) => {
   context.body = "Welcome to my Koa.js Server"
 })
-
+//ok
 router.post('/rpwd/:id',resetpwd_middleware.middleware_for_restpwd,rst_api.rstpwd)
 module.exports = router;
