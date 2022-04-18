@@ -1,4 +1,4 @@
-const mongo = require('../dal/index.js').db('CRED');
+const mongo = require('../dal/index.js').db('CRED')
 const ObjectId = require('mongodb').ObjectId;
 const dtbs2 = require('../dal/query')
 const page_db = require('../dal/page_db')
